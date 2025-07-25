@@ -162,7 +162,7 @@
                     <input type="number" class="form-control" id="tahunanggaran" name="tahunanggaran" min="2025" max="2100" value="<?php echo date('Y') ?>" required>
                 </div>
                 <div class="mb-3">
-                    <div class="g-recaptcha" data-sitekey="YOUR_RECAPTCHA_SITE_KEY"></div>
+                    <div class="g-recaptcha" data-sitekey="6Lclr9wfAAAAACKIegQtyaCFgj9WrTApK5CPUB1Q"></div>
                 </div>
                 <button type="submit" class="btn btn-primary w-100">Login</button>
             </form>
