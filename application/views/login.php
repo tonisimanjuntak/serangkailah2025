@@ -73,19 +73,72 @@
                 font-size: 12px;
             }
         }
+
+        .judul {
+            position: absolute;
+            top: 20px;
+            z-index: 3;
+        }
+
+        /* Styling untuk label nama dinas */
+        .labelnamadinas {
+            font-family: 'Arial', sans-serif;
+            font-size: 34px;
+            font-weight: bold;
+            color: #ffffff; /* Warna biru seperti tema Bootstrap */
+            text-shadow: 4px 4px 6px rgba(245, 211, 39, 0.8), 
+             -4px -4px 6px rgba(255, 255, 255, 0.5);
+            text-align: center;
+            margin-top: 20px;
+            animation: fadeInDown 1.5s ease-in-out; /* Animasi muncul dari atas */
+        }
+
+        /* Styling untuk label nama sistem */
+        .labelnamasistem {
+            font-family: 'Arial', sans-serif;
+            font-size: 18px;
+            font-weight: 500;
+            color: #ffffff; /* Warna abu-abu gelap */
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2); /* Efek shadow lebih halus */
+            text-align: center;
+            margin-bottom: 20px;
+            animation: fadeInUp 1.5s ease-in-out; /* Animasi muncul dari bawah */
+        }
+
+        /* Animasi fadeInDown */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Animasi fadeInUp */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     </style>
 </head>
 <body>
-  <div class="">
-    <h3 class="labelnamadinas">DINAS PENDIDIKAN KABUPATEN DELI SERDANG</h3>
-    <h5 class="labelnamasistem">SISTEM INFORMASI BARANG HABIS PAKAI SEKOLAH</h5>
-  </div>
     <div class="container-fluid d-flex justify-content-center align-items-center vh-100 login-bg">
+        <div class="judul">
+          <h3 class="labelnamadinas">DINAS PENDIDIKAN KABUPATEN DELI SERDANG</h3>
+          <h5 class="labelnamasistem">SISTEM INFORMASI BARANG HABIS PAKAI SEKOLAH</h5>
+        </div>
         <div class="card shadow-lg p-4" style="max-width: 400px; width: 100%;">
             <div class="text-center mb-4">
-                <img src="<?php echo base_url('images/tutwurihandayani.png'); ?>" alt="Logo Aplikasi" class="logo">
-                <h3 class="mt-3">Login</h3>
-                <p class="text-muted app-name">Sistem Informasi Barang Habis Pakai Sekolah<br>Pada Dinas Pendidikan Kabupaten Deli Serdang</p>
+                <img src="<?php echo base_url('images/tutwurihandayani.png'); ?>" alt="Logo Aplikasi" class="logo">                
             </div>
 
             <!-- Flashdata Error -->
@@ -106,7 +159,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="tahunanggaran" class="form-label">Tahun Anggaran</label>
-                    <input type="number" class="form-control" id="tahunanggaran" name="tahunanggaran" placeholder="Contoh: 2023" required>
+                    <input type="number" class="form-control" id="tahunanggaran" name="tahunanggaran" min="2025" max="2100" value="<?php echo date('Y') ?>" required>
                 </div>
                 <div class="mb-3">
                     <div class="g-recaptcha" data-sitekey="YOUR_RECAPTCHA_SITE_KEY"></div>
