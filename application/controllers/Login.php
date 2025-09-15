@@ -78,7 +78,7 @@ class Login extends CI_Controller {
 			} elseif (ENVIRONMENT === 'production') {
 				// Jika environment adalah production, validasi captcha wajib dilakukan
 				if ($captcha_response != '') {
-					$keySecret = '6Lclr9wfAAAAAHk9ttx39srSNbWzg-uhMCHsVjed';
+					$keySecret = '6LcE3MkrAAAAAPvR9iZrkx5tQcK-VnXLmGymVDYM';
 
 					$check = array(
 						'secret' => $keySecret,
