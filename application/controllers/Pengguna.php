@@ -124,54 +124,25 @@ class Pengguna extends CI_Controller {
 		$id = $this->encrypt->decode($id);	
 		$rspengguna = $this->Pengguna_model->get_by_id($id);
 		if ($rspengguna->num_rows()<1) {
-			$pesan = '<div>
-						<div class="alert alert-danger alert-dismissable">
-			                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
-			                <strong>Ilegal!</strong> Data tidak ditemukan! 
-					    </div>
-					</div>';
-			$this->session->set_flashdata('pesan', $pesan);
-			redirect('Pengguna');
+			echo json_encode(array('message' => 'Data tidak ditemukan!'));
 			exit();
 		};
 
 		if ($id=='9999999999') {
-			$pesan = '<div>
-						<div class="alert alert-danger alert-dismissable">
-			                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
-			                <strong>Gagal!</strong> Pengguna ini tidak bisa dihapus ! 
-					    </div>
-					</div>';
-			$this->session->set_flashdata('pesan', $pesan);
-			redirect('Pengguna');
+			echo json_encode(array('message' => 'Pengguna ini tidak bisa dihapus!'));
 			exit();
 		};
 
 
 		$hapus = $this->Pengguna_model->hapus($id);
-		if ($hapus) {		
-
+		if ($hapus['status'] == 'success') {
 			$foto = $rspengguna->row()->foto;
 			if (file_exists('./uploads/pengguna/'.$foto)) { unlink('./uploads/pengguna/'.$foto); };
 
-			$pesan = '<div>
-						<div class="alert alert-success alert-dismissable">
-			                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
-			                <strong>Berhasil!</strong> Data berhasil dihapus!
-					    </div>
-					</div>';
+			echo json_encode(array('success' => true));
 		}else{
-			$eror = $this->db->error();			
-			$pesan = '<div>
-						<div class="alert alert-danger alert-dismissable">
-			                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
-			                <strong>Gagal!</strong> Data gagal dihapus karena sudah digunakan di jurnal! <br>
-					    </div>
-					</div>';
-		}
-
-		$this->session->set_flashdata('pesan', $pesan);
-		redirect('Pengguna');		
+			echo json_encode(array('message' => 'Data gagal dihapus! '.$hapus['message']));
+		}	
 
 	}
 
@@ -257,26 +228,11 @@ class Pengguna extends CI_Controller {
 			$simpan = $this->Pengguna_model->update($data, $idpengguna);
 		}
 
-		if ($simpan) {
-			$pesan = '<div>
-						<div class="alert alert-success alert-dismissable">
-			                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
-			                <strong>Berhasil!</strong> Data berhasil disimpan!
-					    </div>
-					</div>';
+		if ($simpan['status'] == 'success') {
+			echo json_encode(array('success' => true));
 		}else{
-			$eror = $this->db->error();			
-			$pesan = '<div>
-						<div class="alert alert-danger alert-dismissable">
-			                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
-			                <strong>Gagal!</strong> Data gagal disimpan! <br>
-			                Pesan Error : '.$eror['code'].' '.$eror['message'].'
-					    </div>
-					</div>';
-		}
-
-		$this->session->set_flashdata('pesan', $pesan);
-		redirect('Pengguna');		
+			echo json_encode(array('message' => 'Data gagal disimpan! '.$simpan['message']));						
+		}		
 	}
 	
 	public function get_edit_data()
@@ -289,6 +245,7 @@ class Pengguna extends CI_Controller {
 					'namapengguna' 	=>  $RsData->namapengguna,
 					'nip' 			=>  $RsData->nip,
 					'kdruangan' 	=>  $RsData->kdruangan,
+					'kdupt' 	=>  $RsData->kdupt,
 					'jk' 			=>  $RsData->jk,
 					'tgllahir' 		=>  ($RsData->tgllahir!='') ? date('d-m-Y', strtotime($RsData->tgllahir)) : '',
 					'tempatlahir' 	=>  $RsData->tempatlahir,

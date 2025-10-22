@@ -31,6 +31,7 @@
   <!-- select2 -->
   <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
 
+  
   <style>
 
   .ui-autocomplete {
@@ -128,7 +129,17 @@
 }
   </style>
 
-
+<style>
+    .loader {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 50%;
+        height: 50%;
+        z-index: 9999;
+        background: url("<?php echo base_url('images/loading2.gif') ?>") 100% 100% no-repeat;
+    }
+</style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed sidebar-collapse accent-navy">
 <div class="wrapper">

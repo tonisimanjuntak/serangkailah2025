@@ -30,7 +30,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
-          <form action="<?php echo(site_url('Kelompokbarang/simpan')) ?>" method="post" id="form">                      
+          <form action="#" method="post" id="form">                      
             <div class="row">
               <div class="col-md-12">
                 <div class="card" id="cardcontent">
@@ -75,7 +75,7 @@
                   </div> <!-- ./card-body -->
 
                   <div class="card-footer">
-                    <button type="submit" class="btn btn-info float-right"><i class="fa fa-save"></i> Simpan</button>
+                    <button type="submit" class="btn btn-info float-right" id="btnSimpan"><i class="fa fa-save"></i> Simpan</button>
                     <a href="<?php echo(site_url('Kelompokbarang')) ?>" class="btn btn-default float-right mr-1 ml-1"><i class="fa fa-chevron-circle-left"></i> Kembali</a>
                   </div>
                 </div> <!-- /.card -->
@@ -127,7 +127,7 @@
           $('#kdkelompok').attr('readonly', false);
           $('#lbljudul').html('Tambah Data Kelompokbarang');
           $('#lblactive').html('Tambah');
-          $('$kdkelompok').focus();
+          $('#kdkelompok').focus();
     }     
 
     //----------------------------------------------------------------- > validasi
@@ -144,8 +144,9 @@
                 message: 'Kode Kelompok barang tidak boleh kosong'
             },
             stringLength: {
-                max: 5,
-                message: 'Panjang karakter maksimal 5 karakter'
+                min: 17,
+                max: 17,
+                message: 'Panjang karakter harus 17 karakter'
             },
           }
         },
@@ -162,6 +163,60 @@
           }
         },
       }
+    })
+    .on('success.form.bv', function(e) {
+        e.preventDefault();
+
+        const $form = $(e.target);
+        const formData = new FormData($form[0]);
+
+        $('#btnSimpan').prop('disabled', true).html('<i class="fa fa-spin fa-spinner"></i> Menyimpan...');
+
+        $.ajax({
+            url: "<?php echo site_url('kelompokbarang/simpan') ?>",
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            dataType: 'json',
+            success: function(response) {
+                $('#btnSimpan').prop('disabled', false).html('<i class="fa fa-save mr-1"></i>Simpan');
+
+                if (response.success) {
+                    swal('Berhasil!', 'Data berhasil disimpan.', 'success')
+                        .then(() => {
+                            window.location.href = "<?php echo site_url('kelompokbarang'); ?>";
+                        });
+                } else {
+                    swal('Gagal!', response.message, 'error');
+                }
+            },
+            error: function(xhr) {
+              console.log("XHR Response:", xhr); // Tampilkan detail XHR di console
+              console.log("Response Text:", xhr.responseText); // Tampilkan response text
+                $('#btnSimpan').prop('disabled', false).html('<i class="fa fa-save mr-1"></i>Simpan');
+
+                let message = 'Terjadi kesalahan.';
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    message = xhr.responseJSON.message;
+                } else if (xhr.status === 422) {
+                    const errors = xhr.responseJSON.errors;
+                    message = Object.values(errors).flat().join('<br>');
+                } else if (xhr.responseText) {
+                    try {
+                        const parsedResponse = JSON.parse(xhr.responseText);
+                        if (parsedResponse.message) {
+                            message = parsedResponse.message;
+                        }
+                    } catch (e) {
+                        message = xhr.responseText;
+                    }
+                }
+
+                swal('Error!', message, 'error');
+            }
+        });
+
     });
   //------------------------------------------------------------------------> END VALIDASI DAN SIMPAN
 

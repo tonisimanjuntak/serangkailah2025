@@ -86,19 +86,95 @@ class Pengguna_model extends CI_Model {
 
     public function hapus($id)
     {
-    	$this->db->where('idpengguna', $id);		
-        return $this->db->delete($this->tabel);
+        try {
+            $this->db->trans_begin();
+            
+            $data = $this->get_by_id($id)->row();
+            
+            $this->db->where('idpengguna', $id);		
+            $this->db->delete($this->tabel);
+
+            $this->App->riwayatAktifitas($data, 'pengguna', 'hapusPengguna');
+
+            if ($this->db->trans_status() === FALSE) {
+                $this->db->trans_rollback();
+                $error = $this->db->error();
+                return [
+                    'status' => 'error',
+                    'message' => "Terjadi kesalahan: " . $error['message']
+                ];
+            } else {
+                $this->db->trans_commit();
+                return ['status' => 'success', 'message' => "Data berhasil dihapus"];
+            }
+        } catch (\Throwable $th) {
+            $this->db->trans_rollback();
+            return [
+                'status' => 'error',
+                'message' => "Terjadi kesalahan: " . $th->getMessage()
+            ];
+        }
+    	
     }
 
     public function simpan($data)
-    {    	
-    	return $this->db->insert($this->tabel, $data);
+    {
+        try {
+            $this->db->trans_begin(); 
+
+            $this->db->insert($this->tabel, $data);
+            $this->App->riwayatAktifitas($data, 'pengguna', 'simpanPengguna');
+
+            if ($this->db->trans_status() === FALSE) {
+                $this->db->trans_rollback();
+                $error = $this->db->error();
+                return [
+                    'status' => 'error',
+                    'message' => "Terjadi kesalahan: " . $error['message']
+                ];
+            } else {
+                $this->db->trans_commit();
+                return ['status' => 'success', 'message' => "Data berhasil disimpan"];
+            }
+        } catch (\Throwable $th) {
+            $this->db->trans_rollback();
+            return [
+                'status' => 'error',
+                'message' => "Terjadi kesalahan: " . $th->getMessage()
+            ];
+        }
+    	
     }
 
     public function update($data, $id)
     {
-    	$this->db->where('idpengguna', $id);
-        return $this->db->update($this->tabel, $data);
+        try {
+            $this->db->trans_begin();
+            
+            $this->db->where('idpengguna', $id);
+            $this->db->update($this->tabel, $data);
+
+            $this->App->riwayatAktifitas($data, 'pengguna', 'updatePengguna');
+        
+            if ($this->db->trans_status() === FALSE) {
+                $this->db->trans_rollback();
+                $error = $this->db->error();
+                return [
+                    'status' => 'error',
+                    'message' => "Terjadi kesalahan: " . $error['message']
+                ];
+            } else {
+                $this->db->trans_commit();
+                return ['status' => 'success', 'message' => "Data berhasil disimpan"];
+            }
+        } catch (\Throwable $th) {
+            $this->db->trans_rollback();
+            return [
+                'status' => 'error',
+                'message' => "Terjadi kesalahan: " . $th->getMessage()
+            ];
+        }   
+    	
     }
 
 }

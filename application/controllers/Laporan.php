@@ -7,7 +7,6 @@ class Laporan extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('Laporan_model');
-		$this->load->model('App_model', 'App');
 	}
 
 	public function index()

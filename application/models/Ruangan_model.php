@@ -89,19 +89,96 @@ class Ruangan_model extends CI_Model {
 
     public function hapus($kdruangan)
     {
-    	$this->db->where('kdruangan', $kdruangan);		
-        return $this->db->delete($this->tabel);
+        try {
+            $this->db->trans_begin();
+            
+            $data = $this->get_by_id($kdruangan)->row();
+            
+            $this->db->where('kdruangan', $kdruangan);		
+            $this->db->delete($this->tabel);
+
+            $this->App->riwayatAktifitas($data, 'ruangan', 'hapusSekolah');
+
+            if ($this->db->trans_status() === FALSE) {
+                $this->db->trans_rollback();
+                $error = $this->db->error();
+                return [
+                    'status' => 'error',
+                    'message' => "Terjadi kesalahan: " . $error['message']
+                ];
+            } else {
+                $this->db->trans_commit();
+                return ['status' => 'success', 'message' => "Data berhasil dihapus"];
+            }
+        } catch (\Throwable $th) {
+            $this->db->trans_rollback();
+            return [
+                'status' => 'error',
+                'message' => "Terjadi kesalahan: " . $th->getMessage()
+            ];
+        }
+    	
     }
 
     public function simpan($data)
     {    	
-    	return $this->db->insert($this->tabel, $data);
+        try {
+            $this->db->trans_begin(); 
+
+            $this->db->insert($this->tabel, $data);
+            $this->App->riwayatAktifitas($data, 'ruangan', 'simpanSekolah');
+
+            if ($this->db->trans_status() === FALSE) {
+                $this->db->trans_rollback();
+                $error = $this->db->error();
+                return [
+                    'status' => 'error',
+                    'message' => "Terjadi kesalahan: " . $error['message']
+                ];
+            } else {
+                $this->db->trans_commit();
+                return ['status' => 'success', 'message' => "Data berhasil disimpan"];
+            }
+        } catch (\Throwable $th) {
+            $this->db->trans_rollback();
+            return [
+                'status' => 'error',
+                'message' => "Terjadi kesalahan: " . $th->getMessage()
+            ];
+        }
+
+    	
     }
 
     public function update($data, $kdruangan)
     {
-    	$this->db->where('kdruangan', $kdruangan);
-        return $this->db->update($this->tabel, $data);
+        try {
+            $this->db->trans_begin();
+            
+            $this->db->where('kdruangan', $kdruangan);
+            $this->db->update($this->tabel, $data);
+
+            $this->App->riwayatAktifitas($data, 'ruangan', 'updateSekolah');
+        
+            if ($this->db->trans_status() === FALSE) {
+                $this->db->trans_rollback();
+                $error = $this->db->error();
+                return [
+                    'status' => 'error',
+                    'message' => "Terjadi kesalahan: " . $error['message']
+                ];
+            } else {
+                $this->db->trans_commit();
+                return ['status' => 'success', 'message' => "Data berhasil disimpan"];
+            }
+        } catch (\Throwable $th) {
+            $this->db->trans_rollback();
+            return [
+                'status' => 'error',
+                'message' => "Terjadi kesalahan: " . $th->getMessage()
+            ];
+        }   
+    	
     }
 
 }

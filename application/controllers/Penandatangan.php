@@ -10,7 +10,6 @@ class Penandatangan extends CI_Controller
         $this->is_login();
         $this->cek_akses();
         $this->load->model('Penandatangan_model');
-        $this->load->model('App_model');
     }
 
     public function is_login()

@@ -117,12 +117,46 @@
   
   $(document).on("click", "#hapus", function(e) {
     var link = $(this).attr("href");
+    console.log(link);
     e.preventDefault();
-    bootbox.confirm("Anda yakin ingin menghapus data ini ?", function(result) {
-      if (result) {
-        document.location.href = link;
-      }
-    });
+    swal({
+                title: "Hapus?",
+                text: "Apakah anda yakin akan menghapus data ini!",
+                icon: "warning",
+                buttons: ["Batal", "Ya"],
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        url: link,
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function(response) {                            
+                            if (response.success) {
+                                swal('Berhasil!', 'Data berhasil dihapus.', 'success')
+                                .then(() => {
+                                    window.location.href = "<?php echo(site_url('upt')) ?>";
+                                });
+                            } else {
+                                swal('Gagal!', response.message, 'error');
+                            }
+                        },
+                        error: function(xhr) {
+                            let message = 'Terjadi kesalahan.';
+                            if (xhr.responseJSON && xhr.responseJSON.message) {
+                                message = xhr.responseJSON.message;
+                            } else if (xhr.status === 422) {
+                                // Validation errors
+                                const errors = xhr.responseJSON.errors;
+                                message = Object.values(errors).flat().join('<br>');
+                            }
+                            swal('Error!', message, 'error');
+                        }
+                    });
+                    
+                }
+            });
   });  
   
 

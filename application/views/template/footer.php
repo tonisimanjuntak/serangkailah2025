@@ -7,14 +7,17 @@
 
   <!-- Main Footer -->
   <footer class="main-footer text-sm">
-    <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong>
+    <strong>Copyright &copy; <?php echo date('Y') ?> <a href="#">Serangkailah.com</a>.</strong>
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 3.0.2
+      <b>Version</b> 4.0.1
     </div>
   </footer>
 </div>
 <!-- ./wrapper -->
+
+<div class="loader" style="display: none;"></div>
+
 
 <!-- REQUIRED SCRIPTS -->
 <!-- jQuery -->
@@ -52,18 +55,49 @@
   <!-- jquery-ui -->
   <script src="<?php echo(base_url('assets/')) ?>jquery-ui/jquery-ui-2.js"></script>
 
+  <!-- sweet Alert -->
+  <script src="<?php echo(base_url('assets/')) ?>sweetalert/sweetalert.min.js"></script>
 
   <!-- select2 -->
   <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
 
-  <!-- sweetalert -->
-  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+  
   
 <!-- -------------------------------------------------------------------------------------------PAGE SCRIPTS / buang aja -->
 <!-- <script src="<?php echo(base_url()) ?>assets/adminlte/dist/js/pages/dashboard2.js"></script> -->
 
 
+<script>
+        // 🔥 ON AJAX START: Tampilkan loading saat AJAX dimulai
+        $(document).ajaxStart(function() {
+            $('.loader').show();
+            // Nonaktifkan semua tombol submit agar tidak double klik
+            $('button[type="submit"]').prop('disabled', true);
+        });
 
+        // 🔥 ON AJAX STOP: Sembunyikan loading saat semua AJAX selesai
+        $(document).ajaxStop(function() {
+            $('.loader').hide();
+            // Aktifkan kembali tombol submit
+            $('button[type="submit"]').prop('disabled', false);
+        });
+
+        // 🔥 ON AJAX ERROR (Opsional): Tampilkan error umum
+        $(document).ajaxError(function(event, xhr, options, error) {
+            let errorMessage = 'Terjadi kesalahan pada permintaan.';
+            if (xhr.responseJSON && xhr.responseJSON.message) {
+                errorMessage = xhr.responseJSON.message;
+            }
+
+            swal({
+                icon: 'error',
+                title: 'Error!',
+                text: errorMessage
+            });
+        });
+        
+    </script>
 
 
 <script>

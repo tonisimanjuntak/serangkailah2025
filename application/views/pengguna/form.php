@@ -195,7 +195,7 @@
                   </div> <!-- ./card-body -->
 
                   <div class="card-footer">
-                    <button type="submit" class="btn btn-info float-right"><i class="fa fa-save"></i> Simpan</button>
+                    <button type="submit" class="btn btn-info float-right" id="btnSimpan"><i class="fa fa-save"></i> Simpan</button>
                     <a href="<?php echo(site_url('Pengguna')) ?>" class="btn btn-default float-right mr-1 ml-1"><i class="fa fa-chevron-circle-left"></i> Kembali</a>
                   </div>
                 </div> <!-- /.card -->
@@ -232,6 +232,7 @@
               encode      : true
           })      
           .done(function(result) {
+            console.log(result);
             $('#idpengguna').val(result.idpengguna);
             $('#nip').val(result.nip);
             $('#namapengguna').val(result.namapengguna);
@@ -245,6 +246,10 @@
             $('#statusaktif').val(result.statusaktif);
             $('#akseslevel').val(result.akseslevel);
             $('#file_lama').val(result.foto);
+
+            if (result.akseslevel == '2') {
+              $('#kdupt').val(result.kdupt).trigger('change');
+            }
 
             if ( result.foto != '' && result.foto != null ) {
                 $("#output1").attr("src","<?php echo(base_url('./uploads/pengguna/')) ?>" + result.foto);              
@@ -349,6 +354,60 @@
           }
         },
       }
+    })
+    .on('success.form.bv', function(e) {
+        e.preventDefault();
+
+        const $form = $(e.target);
+        const formData = new FormData($form[0]);
+
+        $('#btnSimpan').prop('disabled', true).html('<i class="fa fa-spin fa-spinner"></i> Menyimpan...');
+
+        $.ajax({
+            url: "<?php echo site_url('pengguna/simpan') ?>",
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            dataType: 'json',
+            success: function(response) {
+                $('#btnSimpan').prop('disabled', false).html('<i class="fa fa-save mr-1"></i>Simpan');
+
+                if (response.success) {
+                    swal('Berhasil!', 'Data berhasil disimpan.', 'success')
+                        .then(() => {
+                            window.location.href = "<?php echo site_url('pengguna'); ?>";
+                        });
+                } else {
+                    swal('Gagal!', response.message, 'error');
+                }
+            },
+            error: function(xhr) {
+              console.log("XHR Response:", xhr); // Tampilkan detail XHR di console
+              console.log("Response Text:", xhr.responseText); // Tampilkan response text
+                $('#btnSimpan').prop('disabled', false).html('<i class="fa fa-save mr-1"></i>Simpan');
+
+                let message = 'Terjadi kesalahan.';
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    message = xhr.responseJSON.message;
+                } else if (xhr.status === 422) {
+                    const errors = xhr.responseJSON.errors;
+                    message = Object.values(errors).flat().join('<br>');
+                } else if (xhr.responseText) {
+                    try {
+                        const parsedResponse = JSON.parse(xhr.responseText);
+                        if (parsedResponse.message) {
+                            message = parsedResponse.message;
+                        }
+                    } catch (e) {
+                        message = xhr.responseText;
+                    }
+                }
+
+                swal('Error!', message, 'error');
+            }
+        });
+
     });
   //------------------------------------------------------------------------> END VALIDASI DAN SIMPAN
 
