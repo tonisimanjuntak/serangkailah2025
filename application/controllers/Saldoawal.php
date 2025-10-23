@@ -237,14 +237,11 @@ class Saldoawal extends CI_Controller
     public function delete()
     {
         $hapus = $this->Saldoawal_model->hapus();
-        if (!$hapus) {
-            //jika gagal
-            $eror = $this->db->error();
-            echo json_encode(array('msg' => 'Kode Eror: ' . $eror['code'] . ' ' . $eror['message']));
-            exit();
-        } else {
-            echo json_encode(array('success' => true, 'noterima' => $noterima));
-        }
+        if ($hapus['status'] == 'success') {
+			echo json_encode(array('success' => true));
+		}else{
+			echo json_encode(array('message' => 'Data gagal dihapus! '.$hapus['message']));
+		}
 
     }
 

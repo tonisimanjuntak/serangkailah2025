@@ -138,16 +138,8 @@ class Pengaturan extends CI_Controller
                             and idpenandatangan = '" . $idpenandatangan_pengurusbarang . "'
                 ");
         }
-        $pesan = '<div>
-                    <div class="alert alert-success alert-dismissable">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
-                        <strong>Berhasil!</strong> Data berhasil disimpan!
-                    </div>
-                </div>';
-
-        $this->session->set_flashdata('pesan', $pesan);
-        redirect('pengaturan/ttd');
-
+        
+        echo json_encode(array('success' => true));
     }
 
     public function migrasibarang()
@@ -194,6 +186,40 @@ class Pengaturan extends CI_Controller
         } else {
             echo json_encode(array('success' => false));
         }
+    }
+
+    public function defaultsekolah()
+    {
+        $kdruangan = $this->session->userdata('kdruangan');
+        $listsekolah = $this->db->query("select * from ruangan order by namaruangan")->result();
+        $data['listsekolah'] = $listsekolah;
+        $data['kdruangan'] = $kdruangan;
+        $data['menu']          = 'defaultsekolah';
+        $this->load->view('pengaturan/defaultsekolah', $data);
+    }
+
+    public function simpandefaultsekolah()
+    {
+        $idpengguna = $this->session->userdata('idpengguna');
+        $kdruangan = $this->input->post('defaultsekolah');
+        
+
+        if (empty($kdruangan)) {
+            $kdruangan = null;
+            $this->session->set_userdata('kdruangan', '');
+            $this->session->set_userdata('namaruangan', '');
+        }else{
+            $namaruangan = $this->App->getRuangan($kdruangan)->namaruangan;
+            $this->session->set_userdata('kdruangan', $kdruangan);
+            $this->session->set_userdata('namaruangan', $namaruangan);
+        }
+        
+        $data = array(
+                        'kdruangan' => $kdruangan,
+                    );
+        $this->Pengaturan_model->updatePengguna($data, $idpengguna);        
+        echo json_encode(array('success' => true));
+        // echo json_encode(array('message' => "gagal"));
     }
 
 }

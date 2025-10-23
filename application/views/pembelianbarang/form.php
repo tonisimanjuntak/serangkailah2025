@@ -464,10 +464,10 @@
                       });
                     // alert('Simpan data berhasil!');
                 }else{
-                  console.log(result.msg);
+                  console.log(result.message);
                   swal("Gagal!", "Gagal simpan data!", "warning");
                   $('#simpan').attr("disabled", false);
-                  // alert(result.msg);
+                  // alert(result.message);
                 }
             })
             .fail(function(){

@@ -66,6 +66,12 @@ class Pengaturan_model extends CI_Model
         }
     }
 
+    public function updatePengguna($data, $idpengguna)
+    {
+        $this->db->where('idpengguna', $idpengguna);
+        return $this->db->update('pengguna', $data);
+    }
+
 }
 
 /* End of file Pengaturan_model.php */

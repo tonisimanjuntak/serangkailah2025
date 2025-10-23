@@ -69,7 +69,7 @@ if (!empty($pesan)) {
                           <select name="idstruktur" id="idstruktur" class="form-control">
                             <option value="">Pilih struktur...</option>
                             <?php
-$rsstruktur = $this->App_model->query('struktur', '', 'order by idstruktur');
+$rsstruktur = $this->App->query('struktur', '', 'order by idstruktur');
 foreach ($rsstruktur->result() as $row) {
     echo '<option value="' . $row->idstruktur . '">' . $row->namastruktur . '</option>';
 }
@@ -106,7 +106,7 @@ foreach ($rsstruktur->result() as $row) {
                   </div> <!-- ./card-body -->
 
                   <div class="card-footer">
-                    <button type="submit" class="btn btn-info float-right"><i class="fa fa-save"></i> Simpan</button>
+                    <button type="submit" class="btn btn-info float-right" id="btnsimpan"><i class="fa fa-save"></i> Simpan</button>
                     <a href="<?php echo (site_url('penandatangan')) ?>" class="btn btn-default float-right mr-1 ml-1"><i class="fa fa-chevron-circle-left"></i> Kembali</a>
                   </div>
                 </div> <!-- /.card -->
@@ -216,6 +216,59 @@ foreach ($rsstruktur->result() as $row) {
           }
         },
       }
+    })
+    .on('success.form.bv', function(e) {
+        e.preventDefault();
+
+        const $form = $(e.target);
+        const formData = new FormData($form[0]);
+
+        $('#btnSimpan').prop('disabled', true).html('<i class="fa fa-spin fa-spinner"></i> Menyimpan...');
+
+        $.ajax({
+            url: "<?php echo site_url('penandatangan/simpan') ?>",
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            dataType: 'json',
+            success: function(response) {
+              console.log(response);
+                $('#btnSimpan').prop('disabled', false).html('<i class="fa fa-save mr-1"></i>Simpan');
+
+                if (response.success) {
+                    swal('Berhasil!', 'Data berhasil disimpan.', 'success')
+                        .then(() => {
+                            window.location.href = "<?php echo site_url('penandatangan'); ?>";
+                        });
+                } else {
+                    swal('Gagal!', response.message, 'error');
+                }
+            },
+            error: function(xhr) {
+                $('#btnSimpan').prop('disabled', false).html('<i class="fa fa-save mr-1"></i>Simpan');
+
+                let message = 'Terjadi kesalahan.';
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    message = xhr.responseJSON.message;
+                } else if (xhr.status === 422) {
+                    const errors = xhr.responseJSON.errors;
+                    message = Object.values(errors).flat().join('<br>');
+                } else if (xhr.responseText) {
+                    try {
+                        const parsedResponse = JSON.parse(xhr.responseText);
+                        if (parsedResponse.message) {
+                            message = parsedResponse.message;
+                        }
+                    } catch (e) {
+                        message = xhr.responseText;
+                    }
+                }
+
+                swal('Error!', message, 'error');
+            }
+        });
+
     });
   //------------------------------------------------------------------------> END VALIDASI DAN SIMPAN
 

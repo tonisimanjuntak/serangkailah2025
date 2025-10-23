@@ -1,10 +1,12 @@
 <?php
 $level = $this->session->userdata('akseslevel');
+$kdruangan = $this->session->userdata('kdruangan');
+
 ?>
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-info elevation-4">
     <!-- Brand Logo -->
-    <a href="<?php echo site_url() ?>" class="brand-link navbar-navy text-light text-sm">
+    <a href="<?php echo site_url() ?>" class="brand-link navbar-dark text-light text-sm">
       <img src="<?php echo (base_url()) ?>images/tutwurihandayani.png" alt="DISDIK" class="brand-image img-circle elevation-3"
            style="opacity: .8">
       <span class="brand-text font-weight-light">DINAS PENDIDIKAN</span>
@@ -159,7 +161,7 @@ if (in_array($menu, $menudropdown)) {
 }
 ?>
 
-          <?php if ($level == '1') {?>
+          <?php if (!empty($kdruangan)) {?>
             <li class="nav-item has-treeview <?php echo ($dropdownselected) ? 'menu-open' : '' ?>">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-copy"></i>
@@ -249,7 +251,7 @@ if (in_array($menu, $menudropdown)) {
 
 
 <?php
-$menudropdown = array('bataspenginputan', 'pengaturanttd', 'migrasibarang');
+$menudropdown = array('bataspenginputan', 'pengaturanttd', 'migrasibarang', 'defaultsekolah');
 if (in_array($menu, $menudropdown)) {
     $dropdownselected = true;
 } else {
@@ -268,6 +270,13 @@ if (in_array($menu, $menudropdown)) {
             <ul class="nav nav-treeview">
 
               <?php if ($level == '9' || $level == '3') {?>
+
+              <li class="nav-item">
+                <a href="<?php echo (site_url('pengaturan/defaultsekolah')) ?>" class="nav-link <?php echo ($menu == 'defaultsekolah') ? 'active' : '' ?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Default Sekolah</p>
+                </a>
+              </li>
 
               <li class="nav-item">
                 <a href="<?php echo (site_url('pengaturan/bataspenginputan')) ?>" class="nav-link <?php echo ($menu == 'bataspenginputan') ? 'active' : '' ?>">

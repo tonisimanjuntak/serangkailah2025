@@ -322,3 +322,42 @@ if (!defined('BASEPATH'))
 	    
 
 	}
+
+	function since($timestamp)
+	{
+		// Waktu sekarang
+		$currentTime = time();
+
+		// Selisih waktu (dalam detik)
+		$timeDifference = $currentTime - strtotime($timestamp);
+
+		// Jika waktu yang diberikan lebih besar dari waktu sekarang
+		if ($timeDifference < 0) {
+			return "Waktu yang diberikan tidak valid.";
+		}
+
+		// Hitung selisih waktu dalam menit, jam, hari, minggu, bulan, dan tahun
+		$minutes = floor($timeDifference / 60); // 1 menit = 60 detik
+		$hours = floor($timeDifference / 3600); // 1 jam = 3600 detik
+		$days = floor($timeDifference / 86400); // 1 hari = 86400 detik
+		$weeks = floor($timeDifference / 604800); // 1 minggu = 604800 detik
+		$months = floor($timeDifference / 2592000); // 1 bulan = 2592000 detik (30 hari)
+		$years = floor($timeDifference / 31536000); // 1 tahun = 31536000 detik (365 hari)
+
+		// Tentukan format yang sesuai berdasarkan selisih waktu
+		if ($timeDifference < 60) {
+			return "Baru saja";
+		} elseif ($minutes < 60) {
+			return $minutes . " menit yang lalu";
+		} elseif ($hours < 24) {
+			return $hours . " jam yang lalu";
+		} elseif ($days < 7) {
+			return $days . " hari yang lalu";
+		} elseif ($weeks < 4) {
+			return $weeks . " minggu yang lalu";
+		} elseif ($months < 12) {
+			return $months . " bulan yang lalu";
+		} else {
+			return $years . " tahun yang lalu";
+		}
+	}

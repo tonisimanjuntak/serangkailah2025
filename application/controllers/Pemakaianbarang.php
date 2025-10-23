@@ -141,38 +141,16 @@ class Pemakaianbarang extends CI_Controller {
 		$id = $this->encrypt->decode($id);	
 		
 		if ($this->Pemakaianbarang_model->get_by_id($id)->num_rows()<1) {
-			$pesan = '<div>
-						<div class="alert alert-danger alert-dismissable">
-			                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
-			                <strong>Ilegal!</strong> Data tidak ditemukan! 
-					    </div>
-					</div>';
-			$this->session->set_flashdata('pesan', $pesan);
-			redirect('pemakaianbarang');
+			echo json_encode(array('message' => 'Data tidak ditemukan!'));
 			exit();
 		};
 
 		$hapus = $this->Pemakaianbarang_model->hapus($id);
-		if ($hapus) {			
-			$pesan = '<div>
-						<div class="alert alert-success alert-dismissable">
-			                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
-			                <strong>Berhasil!</strong> Data berhasil dihapus!
-					    </div>
-					</div>';
+		if ($hapus['status'] == 'success') {
+			echo json_encode(array('success' => true));
 		}else{
-			$eror = $this->db->error();			
-			$pesan = '<div>
-						<div class="alert alert-danger alert-dismissable">
-			                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
-			                <strong>Gagal!</strong> Data gagal dihapus karena sudah digunakan! <br>
-					    </div>
-					</div>';
+			echo json_encode(array('message' => 'Data gagal dihapus! '.$hapus['message']));
 		}
-
-		$this->session->set_flashdata('pesan', $pesan);
-		redirect('pemakaianbarang');		
-
 	}
 
 	public function simpan()
@@ -272,14 +250,12 @@ class Pemakaianbarang extends CI_Controller {
 		}
 
 
-		if (!$simpan) { //jika gagal
-			$eror = $this->db->error();	
-			echo json_encode(array('msg'=>'Kode Eror: '.$eror['code'].' '.$eror['message']));
-			exit();
-		}
+		if ($simpan['status'] == 'success') {
+			echo json_encode(array('success' => true, 'nokeluar' => $nokeluar));
+		}else{
+			echo json_encode(array('message' => 'Data gagal disimpan! '.$simpan['message']));						
+		}		
 
-		// jika berhasil akan sampai ke tahap ini		
-		echo json_encode(array('success' => true, 'nokeluar' => $nokeluar));
 	}
 	
 	public function get_edit_data()

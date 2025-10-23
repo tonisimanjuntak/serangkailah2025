@@ -392,10 +392,9 @@
                       });
                     // alert('Simpan data berhasil!');
                 }else{
-                  console.log(result.msg);
-                  swal("Gagal!", "Gagal simpan data!", "warning");
+                  console.log(result.message);
+                  swal("Gagal!", "Gagal simpan data! " + result.message, "warning");
                   $('#simpan').attr("disabled", false);
-                  // alert(result.msg);
                 }
             })
             .fail(function(){

@@ -296,9 +296,9 @@
                 message: 'Username tidak boleh kosong'
             },
             stringLength: {
-                min: 5,
+                min: 4,
                 max: 25,
-                message: 'Panjang karakter minimal 5 sd 25 karakter'
+                message: 'Panjang karakter minimal 4 sd 25 karakter'
             },
           }
         },

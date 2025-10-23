@@ -23,4 +23,14 @@ class App extends CI_Model {
         return true;
     }
 
+    public function getRuangan($kdruangan)
+    {
+        if (!empty($kdruangan)) {
+            $this->db->where('kdruangan', $kdruangan);
+            return $this->db->get('ruangan')->row();
+        }else{
+            return $this->db->get('ruangan');
+        }
+    }
+
 }

@@ -11,6 +11,10 @@ class Login extends CI_Controller {
 
 	public function keluar()
 	{
+		$riwayatLogin = array(
+			'logout_time' => date('Y-m-d H:i:s')
+		);
+		$this->App->riwayatAktifitas($riwayatLogin, 'logout', 'logoutAplikasi');
 		$this->session->sess_destroy(); 
 		redirect('Login');
 	}
@@ -66,9 +70,13 @@ class Login extends CI_Controller {
 						'kdupt' => $result->kdupt,
 						'namaupt' => $result->namaupt,
 						'tahunanggaran' => $tahunanggaran
-					);
-
+					);					
 					$this->session->set_userdata($data);
+
+					$riwayatLogin = array(
+						'login_time' => date('Y-m-d H:i:s')
+					);
+            		$this->App->riwayatAktifitas($riwayatLogin, 'login', 'loginAplikasi');
 					redirect('Home');
 				} else {
 					$pesan = '<div class="alert alert-danger">Username atau Password Anda Salah, Silahkan Coba Lagi!</div>';
@@ -114,8 +122,13 @@ class Login extends CI_Controller {
 								'namaupt' => $result->namaupt,
 								'tahunanggaran' => $tahunanggaran
 							);
-
+							
 							$this->session->set_userdata($data);
+
+							$riwayatLogin = array(
+								'login_time' => date('Y-m-d H:i:s')
+							);
+							$this->App->riwayatAktifitas($riwayatLogin, 'login', 'loginAplikasi');
 							redirect('Home');
 						} else {
 							$pesan = '<div class="alert alert-danger">Username atau Password Anda Salah, Silahkan Coba Lagi!</div>';

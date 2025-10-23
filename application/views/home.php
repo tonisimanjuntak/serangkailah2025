@@ -74,7 +74,7 @@
             ?>
           </div>
 
-          <?php if ($this->session->userdata('akseslevel'!='1')) { ?>
+          <?php if ($this->session->userdata('akseslevel') !='1') { ?>
               
               <div class="col-12 col-sm-4 col-md-4">
                 <div class="info-box">
@@ -120,6 +120,56 @@
                   <!-- /.info-box-content -->
                 </div>
                 <!-- /.info-box -->
+              </div>
+
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h5>Riwayat Aktifitas Pengguna</h5>
+                    <a href="<?php echo site_url('home/riwayataktifitas') ?>"><i class="fas fa-arrow-right"></i> Lihat Riwayat Selengkapnya</a>
+                  </div>
+                  <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-condesed" id="table">
+                              <thead>
+                                <tr>
+                                  <th style="width: 5%; text-align: center;">NO</th>
+                                  <th style="width: 15%; text-align: center;">PENGGUNA</th>
+                                  <th style="text-align: center;">AKTIVITAS</th>
+                                  <th style="width: 20%; text-align: center;">WAKTU</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <?php  
+                                  $rsRiwayat = $this->db->query("
+                                    SELECT * FROM riwayataktifitas ORDER BY inserted_date DESC LIMIT 20 
+                                  ");
+                                  if ($rsRiwayat->num_rows()>0) {
+                                    foreach ($rsRiwayat->result() as $row) {
+                                      echo '
+                                        <tr>
+                                          <td style="text-align: center;">'. $row->id .'</td>
+                                          <td style="text-align: center;">'. $row->namapengguna .'</td>
+                                          <td>'. $row->namafunction  .'</td>
+                                          <td style="text-align: center;">'. since($row->inserted_date) .'</td>
+                                        </tr>
+                                      ';
+                                    }
+                                  }
+                                ?>
+
+                              </tbody>
+                            </table>
+                          </div>
+                        
+                        </div>
+                        <div class="col-12">
+                          
+                        </div>
+                    </div>
+                </div>
               </div>
 
 

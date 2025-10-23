@@ -153,7 +153,7 @@ CREATE TABLE `migrasibarang` (
   `tahunanggaran` char(4) NOT NULL,
   `idpengguna` char(10) NOT NULL,
   PRIMARY KEY (`idmigrasi`)
-) ENGINE=InnoDB AUTO_INCREMENT=2006 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2007 DEFAULT CHARSET=latin1;
 
 /*Table structure for table `penandatangan` */
 
@@ -342,7 +342,7 @@ CREATE TABLE `riwayataktifitas` (
   `namatabel` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `namafunction` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2983 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3034 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Table structure for table `ruangan` */
 
@@ -733,7 +733,7 @@ DELIMITER ;
 /*!50003 DROP FUNCTION IF EXISTS `hitung_average_hargabarang_perruangan` */;
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` FUNCTION `hitung_average_hargabarang_perruangan`(`var_kdruangan` CHAR(10), `var_tahunanggaran` CHAR(4), `var_keybarang` CHAR(14)) RETURNS int
+/*!50003 CREATE DEFINER=`root`@`localhost` FUNCTION `hitung_average_hargabarang_perruangan`(`var_kdruangan` CHAR(10), `var_tahunanggaran` CHAR(4), `var_keybarang` CHAR(26)) RETURNS int
 BEGIN
 	DECLARE var_totalhargabeli DECIMAL(18,0);
 	DECLARE var_pembagai INT(11);
@@ -764,7 +764,7 @@ DELIMITER ;
 /*!50003 DROP FUNCTION IF EXISTS `hitung_average_hargabarang_persekolah` */;
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` FUNCTION `hitung_average_hargabarang_persekolah`(`var_kdsekolah` CHAR(10), `var_tahunanggaran` CHAR(4), `var_keybarang` CHAR(14)) RETURNS int
+/*!50003 CREATE DEFINER=`root`@`localhost` FUNCTION `hitung_average_hargabarang_persekolah`(`var_kdsekolah` CHAR(10), `var_tahunanggaran` CHAR(4), `var_keybarang` CHAR(26)) RETURNS int
 BEGIN
 	DECLARE var_totalhargabeli DECIMAL(18,0);
 	DECLARE var_pembagai INT(11);
@@ -795,7 +795,7 @@ DELIMITER ;
 /*!50003 DROP FUNCTION IF EXISTS `hitung_pemakaian_barang_perruangan` */;
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` FUNCTION `hitung_pemakaian_barang_perruangan`(`var_kdruangan` CHAR(10), `var_tahunanggaran` CHAR(4), `var_keybarang` CHAR(14)) RETURNS int
+/*!50003 CREATE DEFINER=`root`@`localhost` FUNCTION `hitung_pemakaian_barang_perruangan`(`var_kdruangan` CHAR(10), `var_tahunanggaran` CHAR(4), `var_keybarang` CHAR(26)) RETURNS int
 BEGIN
 	DECLARE var_jumlah INT(11);
 	
@@ -816,7 +816,7 @@ DELIMITER ;
 /*!50003 DROP FUNCTION IF EXISTS `hitung_pemakaian_barang_persekolah` */;
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` FUNCTION `hitung_pemakaian_barang_persekolah`(`var_kdsekolah` CHAR(10), `var_tahunanggaran` CHAR(4), `var_keybarang` CHAR(14)) RETURNS int
+/*!50003 CREATE DEFINER=`root`@`localhost` FUNCTION `hitung_pemakaian_barang_persekolah`(`var_kdsekolah` CHAR(10), `var_tahunanggaran` CHAR(4), `var_keybarang` CHAR(26)) RETURNS int
 BEGIN
 	DECLARE var_jumlah INT(11);
 	
@@ -837,7 +837,7 @@ DELIMITER ;
 /*!50003 DROP FUNCTION IF EXISTS `hitung_penambahan_barang_perruangan` */;
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` FUNCTION `hitung_penambahan_barang_perruangan`(`var_kdruangan` CHAR(10), `var_tahunanggaran` CHAR(4), `var_keybarang` CHAR(14)) RETURNS int
+/*!50003 CREATE DEFINER=`root`@`localhost` FUNCTION `hitung_penambahan_barang_perruangan`(`var_kdruangan` CHAR(10), `var_tahunanggaran` CHAR(4), `var_keybarang` CHAR(26)) RETURNS int
 BEGIN
 	DECLARE var_jumlah INT(11);
 	
@@ -858,7 +858,7 @@ DELIMITER ;
 /*!50003 DROP FUNCTION IF EXISTS `hitung_penambahan_barang_persekolah` */;
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` FUNCTION `hitung_penambahan_barang_persekolah`(`var_kdsekolah` CHAR(10), `var_tahunanggaran` CHAR(4), `var_keybarang` CHAR(14)) RETURNS int
+/*!50003 CREATE DEFINER=`root`@`localhost` FUNCTION `hitung_penambahan_barang_persekolah`(`var_kdsekolah` CHAR(10), `var_tahunanggaran` CHAR(4), `var_keybarang` CHAR(26)) RETURNS int
 BEGIN
 	DECLARE var_jumlah INT(11);
 	
@@ -879,7 +879,7 @@ DELIMITER ;
 /*!50003 DROP FUNCTION IF EXISTS `hitung_saldoawal_barang_perruangan` */;
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` FUNCTION `hitung_saldoawal_barang_perruangan`(`var_kdruangan` CHAR(10), `var_tahunanggaran` CHAR(4), `var_keybarang` CHAR(14)) RETURNS int
+/*!50003 CREATE DEFINER=`root`@`localhost` FUNCTION `hitung_saldoawal_barang_perruangan`(`var_kdruangan` CHAR(10), `var_tahunanggaran` CHAR(4), `var_keybarang` CHAR(26)) RETURNS int
 BEGIN
 	DECLARE var_jumlah INT(11);
 	

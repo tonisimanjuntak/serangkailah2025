@@ -85,68 +85,110 @@ class Pemakaianbarang_model extends CI_Model {
 
     public function hapus($id)
     {
-    	$this->db->trans_begin();
 
-        //update stok fifo
-        $this->kembalikan_stok_penerimaan($id);
+        try {
+            $this->db->trans_begin();
+            
+            $data = $this->get_by_id($id)->row();
+            
+            $this->kembalikan_stok_penerimaan($id);
 
-        $this->db->query('delete from pengeluaranbarangdetail where nokeluar="'.$id.'"');
-    	$this->db->where('nokeluar', $id);		
-        $this->db->delete('pengeluaranbarang');
+            $this->db->query('delete from pengeluaranbarangdetail where nokeluar="'.$id.'"');
+            $this->db->where('nokeluar', $id);		
+            $this->db->delete('pengeluaranbarang');
 
+            $this->App->riwayatAktifitas($data, 'pengeluaranbarang', 'hapusPengeluaranBarang');
 
-        if ($this->db->trans_status() === FALSE){
+            if ($this->db->trans_status() === FALSE) {
                 $this->db->trans_rollback();
-                return false;
-        }else{
+                $error = $this->db->error();
+                return [
+                    'status' => 'error',
+                    'message' => "Terjadi kesalahan: " . $error['message']
+                ];
+            } else {
                 $this->db->trans_commit();
-                return true;
+                return ['status' => 'success', 'message' => "Data berhasil dihapus"];
+            }
+        } catch (\Throwable $th) {
+            $this->db->trans_rollback();
+            return [
+                'status' => 'error',
+                'message' => "Terjadi kesalahan: " . $th->getMessage()
+            ];
         }
     }
 
     public function simpan($arrayhead, $arraydetail, $nokeluar)
     {    	
-    	$this->db->trans_begin();
 
-        $this->db->insert('pengeluaranbarang', $arrayhead);
-        $this->db->query('delete from pengeluaranbarangdetail where nokeluar="'.$nokeluar.'"');
-        $this->db->insert_batch('pengeluaranbarangdetail', $arraydetail);
+        try {
+            $this->db->trans_begin(); 
 
-        //update stok fifo
-        $this->kurangi_stok_penerimaan($arrayhead, $arraydetail);
+            $this->db->insert('pengeluaranbarang', $arrayhead);
+            $this->db->query('delete from pengeluaranbarangdetail where nokeluar="'.$nokeluar.'"');
+            $this->db->insert_batch('pengeluaranbarangdetail', $arraydetail);
 
-        if ($this->db->trans_status() === FALSE){
+            //update stok fifo
+            $this->kurangi_stok_penerimaan($arrayhead, $arraydetail);
+
+            $this->App->riwayatAktifitas($arrayhead, 'pengeluaranbarang', 'simpanPengeluaranBarang');
+
+            if ($this->db->trans_status() === FALSE) {
                 $this->db->trans_rollback();
-                return false;
-        }else{
+                $error = $this->db->error();
+                return [
+                    'status' => 'error',
+                    'message' => "Terjadi kesalahan: " . $error['message']
+                ];
+            } else {
                 $this->db->trans_commit();
-                return true;
+                return ['status' => 'success', 'message' => "Data berhasil disimpan"];
+            }
+        } catch (\Throwable $th) {
+            $this->db->trans_rollback();
+            return [
+                'status' => 'error',
+                'message' => "Terjadi kesalahan: " . $th->getMessage()
+            ];
         }
     }
 
     public function update($arrayhead, $arraydetail, $nokeluar)
     {
-    	$this->db->trans_begin();
 
+        try {
+            $this->db->trans_begin();
+            
+            //update stok fifo
+            $this->kembalikan_stok_penerimaan($nokeluar);
+            $this->kurangi_stok_penerimaan($arrayhead, $arraydetail);
 
-        //update stok fifo
-        $this->kembalikan_stok_penerimaan($nokeluar);
-        $this->kurangi_stok_penerimaan($arrayhead, $arraydetail);
+            $this->db->where('nokeluar', $nokeluar);
+            $this->db->update('pengeluaranbarang', $arrayhead);
 
-    	$this->db->where('nokeluar', $nokeluar);
-        $this->db->update('pengeluaranbarang', $arrayhead);
+            $this->db->query('delete from pengeluaranbarangdetail where nokeluar="'.$nokeluar.'"');
+            $this->db->insert_batch('pengeluaranbarangdetail', $arraydetail);
 
-        $this->db->query('delete from pengeluaranbarangdetail where nokeluar="'.$nokeluar.'"');
-        $this->db->insert_batch('pengeluaranbarangdetail', $arraydetail);
-
+            $this->App->riwayatAktifitas($arrayhead, 'pengeluaranbarang', 'updatePengeluaranBarang');
         
-
-        if ($this->db->trans_status() === FALSE){
+            if ($this->db->trans_status() === FALSE) {
                 $this->db->trans_rollback();
-                return false;
-        }else{
+                $error = $this->db->error();
+                return [
+                    'status' => 'error',
+                    'message' => "Terjadi kesalahan: " . $error['message']
+                ];
+            } else {
                 $this->db->trans_commit();
-                return true;
+                return ['status' => 'success', 'message' => "Data berhasil disimpan"];
+            }
+        } catch (\Throwable $th) {
+            $this->db->trans_rollback();
+            return [
+                'status' => 'error',
+                'message' => "Terjadi kesalahan: " . $th->getMessage()
+            ];
         }
     }
 

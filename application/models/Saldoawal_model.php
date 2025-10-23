@@ -100,13 +100,17 @@ class Saldoawal_model extends CI_Model {
 
 	        if ($this->db->trans_status() === FALSE){
 	                $this->db->trans_rollback();
-	                return false;
+                    $error = $this->db->error();
+                    return [
+                        'status' => 'error',
+                        'message' => "Terjadi kesalahan: " . $error['message']
+                    ];
 	        }else{
 	                $this->db->trans_commit();
-	                return true;
+                    return ['status' => 'success', 'message' => "Data berhasil dihapus"];
 	        }
     	}else{
-            return true;
+            return ['status' => 'success', 'message' => "Data berhasil dihapus"];
     	}
 
 

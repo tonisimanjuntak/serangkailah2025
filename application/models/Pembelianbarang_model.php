@@ -85,61 +85,104 @@ class Pembelianbarang_model extends CI_Model {
 
     public function hapus($id)
     {
-    	$this->db->trans_begin();
+        try {
+            $this->db->trans_begin();
+            
+            $data = $this->get_by_id($id)->row();
+            
+            $this->db->query('delete from penerimaanbarangdetail where noterima="'.$id.'"');
 
-        $this->db->query('delete from penerimaanbarangdetail where noterima="'.$id.'"');
+            $this->db->where('noterima', $id);		
+            $this->db->delete('penerimaanbarang');
 
-    	$this->db->where('noterima', $id);		
-        $this->db->delete('penerimaanbarang');
+            $this->App->riwayatAktifitas($data, 'penerimaanBarang', 'hapusPenerimaanBarang');
 
-
-        if ($this->db->trans_status() === FALSE){
+            if ($this->db->trans_status() === FALSE) {
                 $this->db->trans_rollback();
-                return false;
-        }else{
+                $error = $this->db->error();
+                return [
+                    'status' => 'error',
+                    'message' => "Terjadi kesalahan: " . $error['message']
+                ];
+            } else {
                 $this->db->trans_commit();
-                return true;
+                return ['status' => 'success', 'message' => "Data berhasil dihapus"];
+            }
+        } catch (\Throwable $th) {
+            $this->db->trans_rollback();
+            return [
+                'status' => 'error',
+                'message' => "Terjadi kesalahan: " . $th->getMessage()
+            ];
         }
     }
 
     public function simpan($arrayhead, $arraydetail, $noterima)
     {    	
-    	$this->db->trans_begin();
+        try {
+            $this->db->trans_begin(); 
 
-        $this->db->insert('penerimaanbarang', $arrayhead);
+            $this->db->insert('penerimaanbarang', $arrayhead);
 
-        $this->db->query('delete from penerimaanbarangdetail where noterima="'.$noterima.'"');
+            $this->db->query('delete from penerimaanbarangdetail where noterima="'.$noterima.'"');
 
-        $this->db->insert_batch('penerimaanbarangdetail', $arraydetail);
+            $this->db->insert_batch('penerimaanbarangdetail', $arraydetail);
 
-        if ($this->db->trans_status() === FALSE){
+            $this->App->riwayatAktifitas($arrayhead, 'penerimaanbarang', 'simpanPenerimaanBarang');
+
+            if ($this->db->trans_status() === FALSE) {
                 $this->db->trans_rollback();
-                return false;
-        }else{
+                $error = $this->db->error();
+                return [
+                    'status' => 'error',
+                    'message' => "Terjadi kesalahan: " . $error['message']
+                ];
+            } else {
                 $this->db->trans_commit();
-                return true;
+                return ['status' => 'success', 'message' => "Data berhasil disimpan"];
+            }
+        } catch (\Throwable $th) {
+            $this->db->trans_rollback();
+            return [
+                'status' => 'error',
+                'message' => "Terjadi kesalahan: " . $th->getMessage()
+            ];
         }
     }
 
     public function update($arrayhead, $arraydetail, $noterima)
     {
-    	$this->db->trans_begin();
+        try {
+            $this->db->trans_begin();
+            
+            $this->db->where('noterima', $noterima);
+            $this->db->update('penerimaanbarang', $arrayhead);
 
-    	$this->db->where('noterima', $noterima);
-        $this->db->update('penerimaanbarang', $arrayhead);
 
+            $this->db->query('delete from penerimaanbarangdetail where noterima="'.$noterima.'"');
 
-        $this->db->query('delete from penerimaanbarangdetail where noterima="'.$noterima.'"');
+            $this->db->insert_batch('penerimaanbarangdetail', $arraydetail);
 
-        $this->db->insert_batch('penerimaanbarangdetail', $arraydetail);
-
-        if ($this->db->trans_status() === FALSE){
+            $this->App->riwayatAktifitas($arrayhead, 'penerimaanbarang', 'updatePenerimaanBarang');
+        
+            if ($this->db->trans_status() === FALSE) {
                 $this->db->trans_rollback();
-                return false;
-        }else{
+                $error = $this->db->error();
+                return [
+                    'status' => 'error',
+                    'message' => "Terjadi kesalahan: " . $error['message']
+                ];
+            } else {
                 $this->db->trans_commit();
-                return true;
-        }
+                return ['status' => 'success', 'message' => "Data berhasil disimpan"];
+            }
+        } catch (\Throwable $th) {
+            $this->db->trans_rollback();
+            return [
+                'status' => 'error',
+                'message' => "Terjadi kesalahan: " . $th->getMessage()
+            ];
+        }   
     }
 
 }

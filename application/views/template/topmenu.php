@@ -1,11 +1,11 @@
   <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-dark navbar-info text-sm">
+  <nav class="main-header navbar navbar-expand navbar-dark text-sm">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
       </li>
-      <span style="font-size: 20px; text-align: center;"><?php echo $this->session->userdata('namaruangan') ?> | Tahun Anggaran : <?php echo $this->session->userdata('tahunanggaran'); ?></span>
+      <span style="font-size: 20px; text-align: center;" class="text-light"><?php echo $this->session->userdata('namaruangan') ?> | Tahun Anggaran : <?php echo $this->session->userdata('tahunanggaran'); ?></span>
       <!-- <li class="nav-item d-none d-sm-inline-block">
         <a href="index3.html" class="nav-link">Home</a>
       </li>

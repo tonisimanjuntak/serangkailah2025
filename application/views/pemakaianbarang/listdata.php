@@ -117,18 +117,44 @@
     var link = $(this).attr("href");
     e.preventDefault();
 
-    swal("Hapus data ini?", "Apakah anda yakin akan menghapus data ini?", "warning", {
-      buttons: {
-        cancel: "Batal",
-        Ya: true,
-      }
-    })
-    .then((value) =>{
-      if (value=='Ya') {
-          document.location.href = link;
-          // swal("Anda piilih ya");        
-      };
-    });
+    swal({
+                title: "Hapus?",
+                text: "Apakah anda yakin akan menghapus data ini!",
+                icon: "warning",
+                buttons: ["Batal", "Ya"],
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        url: link,
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function(response) {                            
+                            if (response.success) {
+                                swal('Berhasil!', 'Data berhasil dihapus.', 'success')
+                                .then(() => {
+                                    window.location.href = "<?php echo(site_url('pemakaianbarang')) ?>";
+                                });
+                            } else {
+                                swal('Gagal!', response.message, 'error');
+                            }
+                        },
+                        error: function(xhr) {
+                            let message = 'Terjadi kesalahan.';
+                            if (xhr.responseJSON && xhr.responseJSON.message) {
+                                message = xhr.responseJSON.message;
+                            } else if (xhr.status === 422) {
+                                // Validation errors
+                                const errors = xhr.responseJSON.errors;
+                                message = Object.values(errors).flat().join('<br>');
+                            }
+                            swal('Error!', message, 'error');
+                        }
+                    });
+                    
+                }
+            });
   });  
   
 

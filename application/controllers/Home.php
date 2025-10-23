@@ -31,6 +31,84 @@ class Home extends CI_Controller {
 		$this->load->view('home', $data);
 	}
 
+
+	public function riwayataktifitas()
+	{		
+		$data['menu'] = 'home';	
+		$this->load->view('riwayataktifitas', $data);
+	}
+
+
+	public function listriwayat()
+	{
+		$this->db->reset_query();
+		$Datatables = new $this->Datatables;
+		$Datatables->tabelview = 'riwayataktifitas';
+		$Datatables->column_order = array('id', 'deskripsi', 'namapengguna', 'namatabel', 'namafunction', null);
+		$Datatables->column_search = array('deskripsi', 'namapengguna', 'namatabel', 'namafunction');
+		$Datatables->order_array = array('inserted_date' => 'desc');
+
+		
+		//Where Condition
+		$idpengguna = $_POST['idpengguna'];
+		$tglawal = $_POST['tglawal'];
+		$tglakhir = $_POST['tglakhir'];
+		
+		
+		
+		$where = " CAST(inserted_date as date) between '$tglawal' and '$tglakhir' ";
+		if (!empty($idpengguna)) {
+			$where .= " and idpengguna = '" . $idpengguna . "' ";
+		}
+
+		// echo json_encode(['error' => $where]);
+		// exit();
+
+		$Datatables->where_condition = $where;
+
+
+		// static value
+		$Datatables->search_value = $this->input->post('search')['value'];
+		$Datatables->length_row = $this->input->post('length');
+		$Datatables->start_row = $this->input->post('start');
+		$urutkan = $this->input->post('order');
+		if (isset($urutkan)) {
+			$Datatables->num_order_colomn = $urutkan['0']['column'];
+			$Datatables->num_order_dir = $urutkan['0']['dir'];
+		} else {
+			$Datatables->num_order_colomn = NULL;
+			$Datatables->num_order_colomn = NULL;
+		}
+		//-- 
+
+		$RsData = $Datatables->get_datatables();
+		$no = $this->input->post('start');
+		$data = array();
+
+		if ($RsData->num_rows() > 0) {
+			foreach ($RsData->result() as $rowdata) {
+				$no++;
+				$row = array();
+				$row[] = $rowdata->id;
+				$row[] = $rowdata->deskripsi;
+				$row[] = $rowdata->namapengguna;
+				$row[] = $rowdata->namatabel;
+				$row[] = $rowdata->namafunction;
+				$row[] = since($rowdata->inserted_date);
+				$data[] = $row;
+			}
+		}
+
+		$output = array(
+			"draw" => $this->input->post('draw'),
+			"recordsTotal" => $Datatables->count_all(),
+			"recordsFiltered" => $Datatables->count_filtered(),
+			"data" => $data,
+		);
+
+		//output to json format
+		echo json_encode($output);
+	}
 }
 
 /* End of file Home.php */

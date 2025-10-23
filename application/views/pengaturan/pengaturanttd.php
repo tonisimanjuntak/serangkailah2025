@@ -29,7 +29,7 @@ $this->load->view('template/sidemenu');
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
-          <form action="<?php echo (site_url('pengaturan/simpanttd')) ?>" method="post" id="form">
+          <form action="#" method="post" id="form">
             <div class="row">
               <div class="col-md-12">
                 <div class="card" id="cardcontent">
@@ -129,7 +129,7 @@ if ($rsttdkepsek->num_rows() > 0) {
                   </div> <!-- ./card-body -->
 
                   <div class="card-footer">
-                    <button type="submit" class="btn btn-info float-right"><i class="fa fa-save"></i> Simpan</button>
+                    <button type="submit" class="btn btn-info float-right" id="btnsimpan"><i class="fa fa-save"></i> Simpan</button>
                     <a href="<?php echo (site_url()) ?>" class="btn btn-default float-right mr-1 ml-1"><i class="fa fa-chevron-circle-left"></i> Kembali</a>
                   </div>
                 </div> <!-- /.card -->
@@ -154,6 +154,85 @@ if ($rsttdkepsek->num_rows() > 0) {
   $(document).ready(function() {
 
     $('.js-example-basic-single').select2();
+
+    //----------------------------------------------------------------- > validasi
+    $('#form').bootstrapValidator({
+      feedbackIcons: {
+        valid: 'glyphicon glyphicon-ok',
+        invalid: 'glyphicon glyphicon-remove',
+        validating: 'glyphicon glyphicon-refresh'
+      },
+      fields: {
+        idpenandatangan_kepsek: {
+          validators:{
+            notEmpty: {
+                message: 'Nama kepala sekolah tidak boleh kosong'
+            },
+          }
+        },
+        idpenandatangan_pengurusbarang: {
+          validators:{
+            notEmpty: {
+                message: 'Nama pengurus barang sekolah tidak boleh kosong'
+            },
+          }
+        },
+      }
+    })
+    .on('success.form.bv', function(e) {
+        e.preventDefault();
+
+        const $form = $(e.target);
+        const formData = new FormData($form[0]);
+        $('#btnSimpan').prop('disabled', true).html('<i class="fa fa-spin fa-spinner"></i> Menyimpan...');
+
+        $.ajax({
+            url: "<?php echo site_url('pengaturan/simpanttd') ?>",
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            dataType: 'json',
+            success: function(response) {
+              console.log(response);
+
+                $('#btnSimpan').prop('disabled', false).html('<i class="fa fa-save mr-1"></i>Simpan');
+
+                if (response.success) {
+                    swal('Berhasil!', 'Data berhasil disimpan.', 'success')
+                        .then(() => {
+                            window.location.href = "<?php echo site_url('pengaturan/ttd'); ?>";
+                        });
+                } else {
+                    swal('Gagal!', response.message, 'error');
+                }
+            },
+            error: function(xhr) {
+                $('#btnSimpan').prop('disabled', false).html('<i class="fa fa-save mr-1"></i>Simpan');
+
+                let message = 'Terjadi kesalahan.';
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    message = xhr.responseJSON.message;
+                } else if (xhr.status === 422) {
+                    const errors = xhr.responseJSON.errors;
+                    message = Object.values(errors).flat().join('<br>');
+                } else if (xhr.responseText) {
+                    try {
+                        const parsedResponse = JSON.parse(xhr.responseText);
+                        if (parsedResponse.message) {
+                            message = parsedResponse.message;
+                        }
+                    } catch (e) {
+                        message = xhr.responseText;
+                    }
+                }
+
+                swal('Error!', message, 'error');
+            }
+        });
+
+    });
+  //------------------------------------------------------------------------> END VALIDASI DAN SIMPAN
 
 
     $("form").attr('autocomplete', 'off');
