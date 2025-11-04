@@ -28,11 +28,11 @@ class Laporan_model extends CI_Model
     {
         if ($kdruangan!='-') {
             
-            return $this->db->query("SELECT keybarang, hargabelisatuan, kdruangan, tahunanggaran, kdbarang, kdkelompok, keyakun5, merk, namabarang, satuan, `type`, namaruangan, kdupt
+            return $this->db->query("SELECT keybarang, hargabelisatuan, kdruangan, tahunanggaran, kdbarang, kdkelompok, keyakun5, merk, namabarang, satuan, `type`, namaruangan, kdupt, namaupt
                 FROM v_penerimaanbarangdetail_all
                 " . $where . "
-                GROUP BY keybarang, hargabelisatuan, kdruangan, tahunanggaran, kdbarang, kdkelompok, keyakun5, merk, namabarang, satuan, `type`, namaruangan, kdupt
-                ORDER BY kdkelompok ASC, namabarang ASC, tglterima ASC");
+                GROUP BY keybarang, hargabelisatuan, kdruangan, tahunanggaran, kdbarang, kdkelompok, keyakun5, merk, namabarang, satuan, `type`, namaruangan, kdupt, namaupt
+                ORDER BY kdkelompok ASC, namabarang ASC");
 
         }else{
             if ($kdupt!='') {
@@ -41,15 +41,22 @@ class Laporan_model extends CI_Model
                     FROM v_penerimaanbarangdetail_all
                     " . $where . "
                     GROUP BY keybarang, hargabelisatuan, tahunanggaran, kdbarang, kdkelompok, keyakun5, merk, namabarang, satuan, `type`, kdupt
-                    ORDER BY kdkelompok ASC, namabarang ASC, tglterima ASC");
+                    ORDER BY kdkelompok ASC, namabarang ASC");
 
             }else{
 
-                return $this->db->query("SELECT keybarang, hargabelisatuan, tahunanggaran, kdbarang, kdkelompok, keyakun5, merk, namabarang, satuan, `type`
+                // echo "SELECT keybarang, hargabelisatuan, tahunanggaran, kdbarang, kdkelompok, keyakun5, merk, namabarang, satuan, `type`
+                //     FROM v_penerimaanbarangdetail_all
+                //     " . $where . "
+                //     GROUP BY keybarang, hargabelisatuan, tahunanggaran, kdbarang, kdkelompok, keyakun5, merk, namabarang, satuan, `type`
+                //     ORDER BY kdkelompok ASC, namabarang ASC";
+                // exit();
+
+                return $this->db->query("SELECT keybarang, hargabelisatuan, tahunanggaran, kdbarang, kdkelompok, keyakun5, merk, namabarang, satuan, `type`, kdupt, namaupt
                     FROM v_penerimaanbarangdetail_all
                     " . $where . "
-                    GROUP BY keybarang, hargabelisatuan, tahunanggaran, kdbarang, kdkelompok, keyakun5, merk, namabarang, satuan, `type`
-                    ORDER BY kdkelompok ASC, namabarang ASC, tglterima ASC");
+                    GROUP BY keybarang, hargabelisatuan, tahunanggaran, kdbarang, kdkelompok, keyakun5, merk, namabarang, satuan, `type`, kdupt, namaupt
+                    ORDER BY namaupt ASC, kdkelompok ASC, namabarang ASC");
 
             }
         }

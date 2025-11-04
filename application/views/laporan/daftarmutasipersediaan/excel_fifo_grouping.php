@@ -1,13 +1,11 @@
-<html>
-	<head>
-		<title>LAPORAN MUTASI BARANG</title>
-	</head>
-	<body onload="window.print()">
-		
-		<?php
+<?php  
 
+header("Content-type: application/vnd-ms-excel");
+ 
+// Mendefinisikan nama file ekspor "hasil-export.xls"
+header("Content-Disposition: attachment; filename=laporan-daftar-mutasi-persediaan.xls");
 
-		$table = '
+$table = '
 				<table border="0" width="100%" cellpadding="10">
 					<thead>
 						<tr style="font-size: 16px; font-weight: bold; text-align: center">
@@ -145,10 +143,10 @@
 							$table .= '
 											<tr style="font-size: 9px; font-weight: bold">
 												<td width="20%" style="text-align:right; font-size: 10;" colspan="2">SUB TOTAL '.strtoupper($namaupt_old) .'</td>		
-												<td width="20%" style="text-align:right;" colspan="4">'.number_format($subtotalsaldoawal_upt).'</td>
-												<td width="20%" style="text-align:right;" colspan="4">'.number_format($subtotalpenambahan_upt).'</td>
-												<td width="20%" style="text-align:right;" colspan="4">'.number_format($subtotalpemakaian_upt).'</td>
-												<td width="20%" style="text-align:right;" colspan="4">'.number_format($subtotalsaldoakhir_upt).'</td>
+												<td width="20%" style="text-align:right;" colspan="4">'.untitik($subtotalsaldoawal_upt).'</td>
+												<td width="20%" style="text-align:right;" colspan="4">'.untitik($subtotalpenambahan_upt).'</td>
+												<td width="20%" style="text-align:right;" colspan="4">'.untitik($subtotalpemakaian_upt).'</td>
+												<td width="20%" style="text-align:right;" colspan="4">'.untitik($subtotalsaldoakhir_upt).'</td>
 											</tr>
 									';
 
@@ -179,10 +177,10 @@
 					$table .= '
 							<tr style="font-size: 9px; font-weight: bold">
 								<td width="20%" style="text-align:right; font-size: 10;" colspan="2">SUB TOTAL '.strtoupper($namakelompok_old) .'</td>		
-								<td width="20%" style="text-align:right;" colspan="4">'.number_format($subtotalsaldoawal).'</td>
-								<td width="20%" style="text-align:right;" colspan="4">'.number_format($subtotalpenambahan).'</td>
-								<td width="20%" style="text-align:right;" colspan="4">'.number_format($subtotalpemakaian).'</td>
-								<td width="20%" style="text-align:right;" colspan="4">'.number_format($subtotalsaldoakhir).'</td>
+								<td width="20%" style="text-align:right;" colspan="4">'.untitik($subtotalsaldoawal).'</td>
+								<td width="20%" style="text-align:right;" colspan="4">'.untitik($subtotalpenambahan).'</td>
+								<td width="20%" style="text-align:right;" colspan="4">'.untitik($subtotalpemakaian).'</td>
+								<td width="20%" style="text-align:right;" colspan="4">'.untitik($subtotalsaldoakhir).'</td>
 							</tr>
 					';
 
@@ -221,25 +219,25 @@
 								<td width="5%" style="text-align:center;">'.$no++.'</td>
 								<td width="15%" style="text-align:left;">'.$row->namabarang.'</td>		
 
-								<td width="5%" style="text-align:center;">'.number_format($qtysaldoawal).'</td>				
+								<td width="5%" style="text-align:center;">'.untitik($qtysaldoawal).'</td>				
 								<td width="5%" style="text-align:center;">'.$row->satuan.'</td>				
-								<td width="5%" style="text-align:right;">'.number_format($row->hargabelisatuan).'</td>				
-								<td width="5%" style="text-align:right;">'.number_format($qtysaldoawal * $row->hargabelisatuan ).'</td>
+								<td width="5%" style="text-align:right;">'.untitik($row->hargabelisatuan).'</td>				
+								<td width="5%" style="text-align:right;">'.untitik($qtysaldoawal * $row->hargabelisatuan ).'</td>
 
-								<td width="5%" style="text-align:center;">'.number_format($qtypenerimaan).'</td>				
+								<td width="5%" style="text-align:center;">'.untitik($qtypenerimaan).'</td>				
 								<td width="5%" style="text-align:center;">'.$row->satuan.'</td>				
-								<td width="5%" style="text-align:right;">'.number_format($row->hargabelisatuan).'</td>				
-								<td width="5%" style="text-align:right;">'.number_format($qtypenerimaan*$row->hargabelisatuan).'</td>
+								<td width="5%" style="text-align:right;">'.untitik($row->hargabelisatuan).'</td>				
+								<td width="5%" style="text-align:right;">'.untitik($qtypenerimaan*$row->hargabelisatuan).'</td>
 
-								<td width="5%" style="text-align:center;">'.number_format($qtypengeluaran).'</td>				
+								<td width="5%" style="text-align:center;">'.untitik($qtypengeluaran).'</td>				
 								<td width="5%" style="text-align:center;">'.$row->satuan.'</td>				
-								<td width="5%" style="text-align:right;">'.number_format($row->hargabelisatuan).'</td>				
-								<td width="5%" style="text-align:right;">'.number_format($qtypengeluaran * $row->hargabelisatuan ).'</td>
+								<td width="5%" style="text-align:right;">'.untitik($row->hargabelisatuan).'</td>				
+								<td width="5%" style="text-align:right;">'.untitik($qtypengeluaran * $row->hargabelisatuan ).'</td>
 
-								<td width="5%" style="text-align:center;">'.number_format($stokbarang).'</td>				
+								<td width="5%" style="text-align:center;">'.untitik($stokbarang).'</td>				
 								<td width="5%" style="text-align:center;">'.$row->satuan.'</td>				
-								<td width="5%" style="text-align:right;">'.number_format($row->hargabelisatuan).'</td>				
-								<td width="5%" style="text-align:right;">'.number_format($stokbarang * $row->hargabelisatuan).'</td>
+								<td width="5%" style="text-align:right;">'.untitik($row->hargabelisatuan).'</td>				
+								<td width="5%" style="text-align:right;">'.untitik($stokbarang * $row->hargabelisatuan).'</td>
 
 
 							</tr>
@@ -275,10 +273,10 @@
 			$table .= '
 					<tr style="font-size: 9px; font-weight: bold">
 						<td width="20%" style="text-align:right; font-size: 10;" colspan="2">SUB TOTAL '.strtoupper($namakelompok_old).'</td>		
-						<td width="20%" style="text-align:right;" colspan="4">'.number_format($subtotalsaldoawal).'</td>
-						<td width="20%" style="text-align:right;" colspan="4">'.number_format($subtotalpenambahan).'</td>
-						<td width="20%" style="text-align:right;" colspan="4">'.number_format($subtotalpemakaian).'</td>
-						<td width="20%" style="text-align:right;" colspan="4">'.number_format($subtotalsaldoakhir).'</td>
+						<td width="20%" style="text-align:right;" colspan="4">'.untitik($subtotalsaldoawal).'</td>
+						<td width="20%" style="text-align:right;" colspan="4">'.untitik($subtotalpenambahan).'</td>
+						<td width="20%" style="text-align:right;" colspan="4">'.untitik($subtotalpemakaian).'</td>
+						<td width="20%" style="text-align:right;" colspan="4">'.untitik($subtotalsaldoakhir).'</td>
 					</tr>
 			';
 
@@ -294,10 +292,10 @@
 				$table .= '
 								<tr style="font-size: 12px; font-weight: bold">
 									<td width="20%" style="text-align:right; font-size: 10;" colspan="2">SUB TOTAL '.strtoupper($namaupt_old) .'</td>		
-									<td width="20%" style="text-align:right;" colspan="4">'.number_format($subtotalsaldoawal_upt).'</td>
-									<td width="20%" style="text-align:right;" colspan="4">'.number_format($subtotalpenambahan_upt).'</td>
-									<td width="20%" style="text-align:right;" colspan="4">'.number_format($subtotalpemakaian_upt).'</td>
-									<td width="20%" style="text-align:right;" colspan="4">'.number_format($subtotalsaldoakhir_upt).'</td>
+									<td width="20%" style="text-align:right;" colspan="4">'.untitik($subtotalsaldoawal_upt).'</td>
+									<td width="20%" style="text-align:right;" colspan="4">'.untitik($subtotalpenambahan_upt).'</td>
+									<td width="20%" style="text-align:right;" colspan="4">'.untitik($subtotalpemakaian_upt).'</td>
+									<td width="20%" style="text-align:right;" colspan="4">'.untitik($subtotalsaldoakhir_upt).'</td>
 								</tr>
 						';
 	
@@ -311,10 +309,10 @@
 			$table .= '
 					<tr style="font-size: 12px; font-weight: bold">
 						<td width="20%" style="text-align:right;" colspan="2">TOTAL KESELURUHAN</td>		
-						<td width="20%" style="text-align:right;" colspan="4">'.number_format($totalsaldoawal).'</td>
-						<td width="20%" style="text-align:right;" colspan="4">'.number_format($totalpenambahan).'</td>
-						<td width="20%" style="text-align:right;" colspan="4">'.number_format($totalpemakaian).'</td>
-						<td width="20%" style="text-align:right;" colspan="4">'.number_format($totalsaldoakhir).'</td>
+						<td width="20%" style="text-align:right;" colspan="4">'.untitik($totalsaldoawal).'</td>
+						<td width="20%" style="text-align:right;" colspan="4">'.untitik($totalpenambahan).'</td>
+						<td width="20%" style="text-align:right;" colspan="4">'.untitik($totalpemakaian).'</td>
+						<td width="20%" style="text-align:right;" colspan="4">'.untitik($totalsaldoakhir).'</td>
 					</tr>
 			';
 
@@ -444,7 +442,8 @@
 			';
 
 		$table .= '</tbody></table>';
-		echo $table;
-		?>
-	</body>
-</html>
+
+
+echo $table;
+
+?>

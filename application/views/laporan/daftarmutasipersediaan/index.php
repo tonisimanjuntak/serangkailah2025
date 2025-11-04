@@ -202,7 +202,7 @@
         var tglawal     = $('#tglawal').val();
         var tglakhir     = $('#tglakhir').val();
 
-        if (kdruangan=='') {
+        if (kdruangan=='' && akseslevel=='1') {
           swal("Nama Ruangan", "Nama ruangan belum dipilih!!", "warning");
           return false; 
         }

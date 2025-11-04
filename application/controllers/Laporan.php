@@ -7,6 +7,7 @@ class Laporan extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('Laporan_model');
+		$this->load->model('App_model', 'App');
 	}
 
 	public function index()
@@ -360,7 +361,7 @@ class Laporan extends CI_Controller {
 		if ($jenislaporan=='cetak') {
 			$this->load->view('laporan/daftarmutasipersediaan/cetak_fifo_grouping', $data);
 		}else{
-			$this->load->view('laporan/daftarmutasipersediaan/excel_fifo', $data);
+			$this->load->view('laporan/daftarmutasipersediaan/excel_fifo_grouping', $data);
 		}
 
 

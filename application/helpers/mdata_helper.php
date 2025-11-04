@@ -257,6 +257,13 @@ if (!defined('BASEPATH'))
 		return $cReturn;
 	}
 
+	function untitik($tenama)
+	{
+		$cReturn = str_replace('.', '', $tenama); 
+		$cReturn = str_replace(',', '', $cReturn); 
+		return $cReturn;
+	}
+
 	function berapawaktuyanglalu($tanggal)
 	{
 
