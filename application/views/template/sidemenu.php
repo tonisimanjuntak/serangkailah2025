@@ -198,7 +198,7 @@ if (in_array($menu, $menudropdown)) {
 
 
           <?php
-$menudropdown = array('laporanstokfifo', 'laporanpembelian', 'laporanpemakaian', 'daftarmutasipersediaan');
+$menudropdown = array('laporanstokfifo', 'laporanpembelian', 'laporanpemakaian', 'daftarmutasipersediaan', 'kartustok');
 if (in_array($menu, $menudropdown)) {
     $dropdownselected = true;
 } else {
@@ -240,6 +240,14 @@ if (in_array($menu, $menudropdown)) {
                 <a href="<?php echo (site_url('laporan/daftarmutasipersediaan')) ?>" class="nav-link <?php echo ($menu == 'daftarmutasipersediaan') ? 'active' : '' ?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Daftar Mutasi Persediaan</p>
+                </a>
+              </li>
+
+
+              <li class="nav-item">
+                <a href="<?php echo (site_url('kartustok')) ?>" class="nav-link <?php echo ($menu == 'kartustok') ? 'active' : '' ?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Kartu Persediaan</p>
                 </a>
               </li>
 
