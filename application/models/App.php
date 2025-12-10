@@ -33,4 +33,10 @@ class App extends CI_Model {
         }
     }
 
+    public function getBarangById($keybarang)
+    {
+        $this->db->where('keybarang', $keybarang);
+        return $this->db->get('barang')->row();
+    }
+
 }

@@ -159,7 +159,7 @@
         ajax: {
             url: "<?php echo site_url('select2/searchBarang') ?>", // URL untuk pencarian
             dataType: 'json',
-            delay: 250, // Delay saat mengetik (ms)
+            delay: 500, // Delay saat mengetik (ms)
             data: function(params) {
                 return {
                     q: params.term, // Parameter pencarian
@@ -216,7 +216,7 @@
         };
 
         
-        window.open("<?php echo site_url('kartustok/cetak/') ?>" + jenislaporan + "/" + tglawal + "/" + tglakhir + "/" + kdruangan + "/" + kdkelompok + "/" + keybarang + "/Kartu Stok");
+        window.open("<?php echo site_url('kartustok/cetak/') ?>" + jenislaporan + "/" + tglawal + "/" + tglakhir + "/" + kdruangan + "/" + kdkelompok + "/" + keybarang + "/Kartu Persediaan Barang");
 
     }
 </script>

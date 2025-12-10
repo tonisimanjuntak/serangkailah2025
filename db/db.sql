@@ -76,7 +76,7 @@ CREATE TABLE `ci_sessions` (
 
 /*Data for the table `ci_sessions` */
 
-insert  into `ci_sessions`(`id`,`ip_address`,`timestamp`,`data`) values ('ahop8ghcl2hhsmihqonl1bcdao391elj','::1',1761121775,'__ci_last_regenerate|i:1761121775;'),('dcsvn7lckbpkrg3tq5sp8rqdf1t3nk91','::1',1761197392,'__ci_last_regenerate|i:1761197229;idpengguna|s:10:\"2002210001\";namapengguna|s:16:\"Toni Simanjuntak\";kdruangan|s:10:\"2104190001\";namaruangan|s:34:\"SD INPRES NO 105285 TANDAM HILIR I\";nip|s:1:\"-\";jk|s:1:\"L\";jk2|s:9:\"Laki-laki\";username|s:4:\"toni\";foto|s:14:\"2002210001.jpg\";akseslevel|s:1:\"9\";akseslevel2|s:12:\"Admin System\";kdupt|N;namaupt|N;tahunanggaran|s:4:\"2025\";'),('cqt4ndecvia2v3rssrjn0uc1nvd4biu4','::1',1761211170,'__ci_last_regenerate|i:1761211151;'),('0644psg1rvom5k9jm48o8rjpl7jh4u64','::1',1762232994,'__ci_last_regenerate|i:1762232994;'),('a3sjgl2klj0mtf5ph9snoqarp769ok1b','::1',1765240574,'__ci_last_regenerate|i:1765240574;idpengguna|s:10:\"2510230001\";namapengguna|s:16:\"Toni Simanjuntak\";kdruangan|s:10:\"2104190001\";namaruangan|s:34:\"SD INPRES NO 105285 TANDAM HILIR I\";nip|s:18:\"123456789012345678\";jk|s:1:\"L\";jk2|s:9:\"Laki-laki\";username|s:4:\"toni\";foto|s:14:\"2510230001.png\";akseslevel|s:1:\"9\";akseslevel2|s:12:\"Admin System\";kdupt|N;namaupt|N;tahunanggaran|s:4:\"2025\";'),('mosdber1fu6fk89fj264gnovqs1lprsn','::1',1765246967,'__ci_last_regenerate|i:1765246965;idpengguna|s:10:\"2510230001\";namapengguna|s:16:\"Toni Simanjuntak\";kdruangan|s:10:\"2104190001\";namaruangan|s:34:\"SD INPRES NO 105285 TANDAM HILIR I\";nip|s:18:\"123456789012345678\";jk|s:1:\"L\";jk2|s:9:\"Laki-laki\";username|s:4:\"toni\";foto|s:14:\"2510230001.png\";akseslevel|s:1:\"9\";akseslevel2|s:12:\"Admin System\";kdupt|N;namaupt|N;tahunanggaran|s:4:\"2025\";');
+insert  into `ci_sessions`(`id`,`ip_address`,`timestamp`,`data`) values ('t61huos8tcks3plvbgiqqqb2i63p6m9q','::1',1765336406,'__ci_last_regenerate|i:1765336406;idpengguna|s:10:\"2510230001\";namapengguna|s:16:\"Toni Simanjuntak\";kdruangan|s:10:\"2104190001\";namaruangan|s:34:\"SD INPRES NO 105285 TANDAM HILIR I\";nip|s:18:\"123456789012345678\";jk|s:1:\"L\";jk2|s:9:\"Laki-laki\";username|s:4:\"toni\";foto|s:14:\"2510230001.png\";akseslevel|s:1:\"9\";akseslevel2|s:12:\"Admin System\";kdupt|N;namaupt|N;tahunanggaran|s:4:\"2025\";');
 
 /*Table structure for table `dpa` */
 
@@ -232,7 +232,7 @@ CREATE TABLE `penerimaanbarang` (
 
 /*Data for the table `penerimaanbarang` */
 
-insert  into `penerimaanbarang`(`noterima`,`tglterima`,`uraian`,`tahunanggaran`,`kdruangan`,`tglinsert`,`tglupdate`,`idpengguna`,`totalbeli`,`jenispenerimaan`) values ('2511L00001','2025-11-04','Test','2025','2104190001','2025-11-04 09:46:19','2025-11-04 09:46:19','2510230001',950000,'Penerimaan');
+insert  into `penerimaanbarang`(`noterima`,`tglterima`,`uraian`,`tahunanggaran`,`kdruangan`,`tglinsert`,`tglupdate`,`idpengguna`,`totalbeli`,`jenispenerimaan`) values ('2511L00001','2025-11-04','Test','2025','2104190001','2025-11-04 09:46:19','2025-11-04 09:46:19','2510230001',950000,'Penerimaan'),('2512L00001','2025-01-01','Saldo Awal Tahun 2025','2025','2104190001','2025-12-10 09:33:05','2025-12-10 09:33:05','2510230001',450000,'Saldo Awal');
 
 /*Table structure for table `penerimaanbarangdetail` */
 
@@ -252,7 +252,7 @@ CREATE TABLE `penerimaanbarangdetail` (
 
 /*Data for the table `penerimaanbarangdetail` */
 
-insert  into `penerimaanbarangdetail`(`noterima`,`keybarang`,`qtyterima`,`hargabelisatuan`,`stokbarang`) values ('2511L00001','01.01.07.01.03.01.01102025',50,15000,49),('2511L00001','01.01.07.01.03.03.05482025',20,10000,19);
+insert  into `penerimaanbarangdetail`(`noterima`,`keybarang`,`qtyterima`,`hargabelisatuan`,`stokbarang`) values ('2511L00001','01.01.07.01.03.01.01102025',50,15000,49),('2511L00001','01.01.07.01.03.03.05482025',20,10000,19),('2512L00001','01.01.07.01.03.01.01102025',30,15000,30);
 
 /*Table structure for table `pengaturan` */
 
@@ -268,7 +268,7 @@ CREATE TABLE `pengaturan` (
 
 /*Data for the table `pengaturan` */
 
-insert  into `pengaturan`(`aktifbataspenginputan`,`tglbataspenginputan`,`sekolahbisalogin`,`uptbisalogin`,`aktifbataspenginputansekolah`) values (1,'2025-11-30 23:59:00',1,1,1);
+insert  into `pengaturan`(`aktifbataspenginputan`,`tglbataspenginputan`,`sekolahbisalogin`,`uptbisalogin`,`aktifbataspenginputansekolah`) values (1,'2025-12-31 23:59:00',1,1,1);
 
 /*Table structure for table `pengaturanbatassekolah` */
 
@@ -406,11 +406,11 @@ CREATE TABLE `riwayataktifitas` (
   `namatabel` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `namafunction` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3042 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3043 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `riwayataktifitas` */
 
-insert  into `riwayataktifitas`(`id`,`deskripsi`,`idpengguna`,`namapengguna`,`inserted_date`,`namatabel`,`namafunction`) values (3034,'{\"login_time\":\"2025-11-04 09:26:41\"}','2510230001','Toni Simanjuntak','2025-11-04 09:26:41','login','loginAplikasi'),(3035,'{\"noterima\":\"2511L00001\",\"tglterima\":\"2025-11-04\",\"uraian\":\"Test\",\"tahunanggaran\":\"2025\",\"kdruangan\":\"2104190001\",\"jenispenerimaan\":\"Penerimaan\",\"tglinsert\":\"2025-11-04 09:46:19\",\"tglupdate\":\"2025-11-04 09:46:19\",\"idpengguna\":\"2510230001\",\"totalbeli\":\"950000\"}','2510230001','Toni Simanjuntak','2025-11-04 09:46:19','penerimaanbarang','simpanPenerimaanBarang'),(3036,'{\"nokeluar\":\"2511K00001\",\"tglkeluar\":\"2025-11-04\",\"uraian\":\"Test\",\"tahunanggaran\":\"2025\",\"kdruangan\":\"2104190001\",\"tglinsert\":\"2025-11-04 09:46:41\",\"tglupdate\":\"2025-11-04 09:46:41\",\"idpengguna\":\"2510230001\"}','2510230001','Toni Simanjuntak','2025-11-04 09:46:41','pengeluaranbarang','simpanPengeluaranBarang'),(3037,'{\"logout_time\":\"2025-11-04 11:47:53\"}','2510230001','Toni Simanjuntak','2025-11-04 11:47:53','logout','logoutAplikasi'),(3038,'{\"login_time\":\"2025-11-04 11:51:20\"}','2510230001','Toni Simanjuntak','2025-11-04 11:51:20','login','loginAplikasi'),(3039,'{\"logout_time\":\"2025-11-04 12:09:54\"}','2510230001','Toni Simanjuntak','2025-11-04 12:09:54','logout','logoutAplikasi'),(3040,'{\"login_time\":\"2025-12-09 07:27:57\"}','2510230001','Toni Simanjuntak','2025-12-09 07:27:57','login','loginAplikasi'),(3041,'{\"login_time\":\"2025-12-09 09:16:04\"}','2510230001','Toni Simanjuntak','2025-12-09 09:16:04','login','loginAplikasi');
+insert  into `riwayataktifitas`(`id`,`deskripsi`,`idpengguna`,`namapengguna`,`inserted_date`,`namatabel`,`namafunction`) values (3034,'{\"login_time\":\"2025-11-04 09:26:41\"}','2510230001','Toni Simanjuntak','2025-11-04 09:26:41','login','loginAplikasi'),(3035,'{\"noterima\":\"2511L00001\",\"tglterima\":\"2025-11-04\",\"uraian\":\"Test\",\"tahunanggaran\":\"2025\",\"kdruangan\":\"2104190001\",\"jenispenerimaan\":\"Penerimaan\",\"tglinsert\":\"2025-11-04 09:46:19\",\"tglupdate\":\"2025-11-04 09:46:19\",\"idpengguna\":\"2510230001\",\"totalbeli\":\"950000\"}','2510230001','Toni Simanjuntak','2025-11-04 09:46:19','penerimaanbarang','simpanPenerimaanBarang'),(3036,'{\"nokeluar\":\"2511K00001\",\"tglkeluar\":\"2025-11-04\",\"uraian\":\"Test\",\"tahunanggaran\":\"2025\",\"kdruangan\":\"2104190001\",\"tglinsert\":\"2025-11-04 09:46:41\",\"tglupdate\":\"2025-11-04 09:46:41\",\"idpengguna\":\"2510230001\"}','2510230001','Toni Simanjuntak','2025-11-04 09:46:41','pengeluaranbarang','simpanPengeluaranBarang'),(3037,'{\"logout_time\":\"2025-11-04 11:47:53\"}','2510230001','Toni Simanjuntak','2025-11-04 11:47:53','logout','logoutAplikasi'),(3038,'{\"login_time\":\"2025-11-04 11:51:20\"}','2510230001','Toni Simanjuntak','2025-11-04 11:51:20','login','loginAplikasi'),(3039,'{\"logout_time\":\"2025-11-04 12:09:54\"}','2510230001','Toni Simanjuntak','2025-11-04 12:09:54','logout','logoutAplikasi'),(3040,'{\"login_time\":\"2025-12-09 07:27:57\"}','2510230001','Toni Simanjuntak','2025-12-09 07:27:57','login','loginAplikasi'),(3041,'{\"login_time\":\"2025-12-09 09:16:04\"}','2510230001','Toni Simanjuntak','2025-12-09 09:16:04','login','loginAplikasi'),(3042,'{\"login_time\":\"2025-12-10 08:22:30\"}','2510230001','Toni Simanjuntak','2025-12-10 08:22:30','login','loginAplikasi');
 
 /*Table structure for table `ruangan` */
 
@@ -1127,6 +1127,41 @@ BEGIN
     END */$$
 DELIMITER ;
 
+/* Function  structure for function  `saldoakhir_kartustok` */
+
+/*!50003 DROP FUNCTION IF EXISTS `saldoakhir_kartustok` */;
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` FUNCTION `saldoakhir_kartustok`(`var_tglakhir` DATE, `var_kdruangan` CHAR(10), `var_tahunanggaran` CHAR(4), `var_keybarang` CHAR(26)) RETURNS int
+BEGIN
+	DECLARE var_jumlah1 INT(11);
+	DECLARE var_jumlah2 INT(11);
+	
+	
+	SELECT SUM(qtyterima) INTO var_jumlah1 FROM penerimaanbarangdetail JOIN penerimaanbarang 
+		ON penerimaanbarang.`noterima`=`penerimaanbarangdetail`.`noterima`
+		WHERE penerimaanbarang.`kdruangan`=var_kdruangan AND penerimaanbarang.`tahunanggaran`=var_tahunanggaran
+			AND penerimaanbarangdetail.`keybarang`=var_keybarang and penerimaanbarang.`tglterima` <= var_tglakhir;
+	
+	IF var_jumlah1 IS NULL THEN
+		SET var_jumlah1 = 0;
+	END IF;
+	
+	
+	SELECT SUM(qtykeluar) INTO var_jumlah2 FROM v_pengeluaranbarangdetail_with_hargabelisatuan
+		WHERE v_pengeluaranbarangdetail_with_hargabelisatuan.`kdruangan`=var_kdruangan 
+		AND v_pengeluaranbarangdetail_with_hargabelisatuan.`tahunanggaran`=var_tahunanggaran
+		AND v_pengeluaranbarangdetail_with_hargabelisatuan.`keybarang`=var_keybarang
+		AND v_pengeluaranbarangdetail_with_hargabelisatuan.`tglkeluar` <= var_tglakhir;
+	
+	IF var_jumlah2 IS NULL THEN
+		SET var_jumlah2 = 0;
+	END IF;
+	
+	RETURN var_jumlah1 - var_jumlah2;
+    END */$$
+DELIMITER ;
+
 /* Function  structure for function  `saldoawal_dinas_new` */
 
 /*!50003 DROP FUNCTION IF EXISTS `saldoawal_dinas_new` */;
@@ -1173,6 +1208,41 @@ BEGIN
 	END IF;
 	
 	RETURN var_jumlah1 + var_jumlah2 - var_jumlah3;
+    END */$$
+DELIMITER ;
+
+/* Function  structure for function  `saldoawal_kartustok` */
+
+/*!50003 DROP FUNCTION IF EXISTS `saldoawal_kartustok` */;
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` FUNCTION `saldoawal_kartustok`(`var_tglawal` DATE, `var_kdruangan` CHAR(10), `var_tahunanggaran` CHAR(4), `var_keybarang` CHAR(26)) RETURNS int
+BEGIN
+	DECLARE var_jumlah1 INT(11);
+	DECLARE var_jumlah2 INT(11);
+	
+	
+	SELECT SUM(qtyterima) INTO var_jumlah1 FROM penerimaanbarangdetail JOIN penerimaanbarang 
+		ON penerimaanbarang.`noterima`=`penerimaanbarangdetail`.`noterima`
+		WHERE penerimaanbarang.`kdruangan`=var_kdruangan AND penerimaanbarang.`tahunanggaran`=var_tahunanggaran
+			AND penerimaanbarangdetail.`keybarang`=var_keybarang and penerimaanbarang.`tglterima` < var_tglawal;
+	
+	IF var_jumlah1 IS NULL THEN
+		SET var_jumlah1 = 0;
+	END IF;
+	
+	
+	SELECT SUM(qtykeluar) INTO var_jumlah2 FROM v_pengeluaranbarangdetail_with_hargabelisatuan
+		WHERE v_pengeluaranbarangdetail_with_hargabelisatuan.`kdruangan`=var_kdruangan 
+		AND v_pengeluaranbarangdetail_with_hargabelisatuan.`tahunanggaran`=var_tahunanggaran
+		AND v_pengeluaranbarangdetail_with_hargabelisatuan.`keybarang`=var_keybarang
+		AND v_pengeluaranbarangdetail_with_hargabelisatuan.`tglkeluar` < var_tglawal;
+	
+	IF var_jumlah2 IS NULL THEN
+		SET var_jumlah2 = 0;
+	END IF;
+	
+	RETURN var_jumlah1 - var_jumlah2;
     END */$$
 DELIMITER ;
 
@@ -2135,7 +2205,7 @@ DROP TABLE IF EXISTS `v_upt`;
 /*!50001 DROP TABLE IF EXISTS `v_kartustok` */;
 /*!50001 DROP VIEW IF EXISTS `v_kartustok` */;
 
-/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_kartustok` AS select `z`.`idtransaksi` AS `idtransaksi`,`z`.`tgltransaksi` AS `tgltransaksi`,`z`.`tahunanggaran` AS `tahunanggaran`,`z`.`kdruangan` AS `kdruangan`,`z`.`keybarang` AS `keybarang`,`z`.`kdbarang` AS `kdbarang`,`z`.`namabarang` AS `namabarang`,`z`.`satuan` AS `satuan`,`z`.`jumlahterima` AS `jumlahterima`,`z`.`jumlahkeluar` AS `jumlahkeluar`,`z`.`jenis` AS `jenis` from (select `v_penerimaanbarangdetail`.`noterima` AS `idtransaksi`,`v_penerimaanbarangdetail`.`tglterima` AS `tgltransaksi`,`v_penerimaanbarangdetail`.`tahunanggaran` AS `tahunanggaran`,`v_penerimaanbarangdetail`.`kdruangan` AS `kdruangan`,`v_penerimaanbarangdetail`.`keybarang` AS `keybarang`,`v_penerimaanbarangdetail`.`kdbarang` AS `kdbarang`,`v_penerimaanbarangdetail`.`namabarang` AS `namabarang`,`v_penerimaanbarangdetail`.`satuan` AS `satuan`,`v_penerimaanbarangdetail`.`qtyterima` AS `jumlahterima`,0 AS `jumlahkeluar`,'1' AS `jenis` from `v_penerimaanbarangdetail` union select `v_pengeluaranbarangdetail`.`nokeluar` AS `nokeluar`,`v_pengeluaranbarangdetail`.`tglkeluar` AS `tglkeluar`,`v_pengeluaranbarangdetail`.`tahunanggaran` AS `tahunanggaran`,`v_pengeluaranbarangdetail`.`kdruangan` AS `kdruangan`,`v_pengeluaranbarangdetail`.`keybarang` AS `keybarang`,`v_pengeluaranbarangdetail`.`kdbarang` AS `kdbarang`,`v_pengeluaranbarangdetail`.`namabarang` AS `namabarang`,`v_pengeluaranbarangdetail`.`satuan` AS `satuan`,0 AS `jumlahterima`,`v_pengeluaranbarangdetail`.`qtykeluar` AS `jumlahkeluar`,'2' AS `jenis` from `v_pengeluaranbarangdetail`) `z` order by `z`.`kdruangan`,`z`.`tahunanggaran`,`z`.`keybarang`,`z`.`tgltransaksi`,`z`.`jenis` */;
+/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_kartustok` AS select `z`.`idtransaksi` AS `idtransaksi`,`z`.`tgltransaksi` AS `tgltransaksi`,`z`.`tahunanggaran` AS `tahunanggaran`,`z`.`kdruangan` AS `kdruangan`,`z`.`keybarang` AS `keybarang`,`z`.`kdbarang` AS `kdbarang`,`z`.`namabarang` AS `namabarang`,`z`.`satuan` AS `satuan`,`z`.`jumlahterima` AS `jumlahterima`,`z`.`jumlahkeluar` AS `jumlahkeluar`,`z`.`jenis` AS `jenis` from (select `v_penerimaanbarangdetail_all`.`noterima` AS `idtransaksi`,`v_penerimaanbarangdetail_all`.`tglterima` AS `tgltransaksi`,`v_penerimaanbarangdetail_all`.`tahunanggaran` AS `tahunanggaran`,`v_penerimaanbarangdetail_all`.`kdruangan` AS `kdruangan`,`v_penerimaanbarangdetail_all`.`keybarang` AS `keybarang`,`v_penerimaanbarangdetail_all`.`kdbarang` AS `kdbarang`,`v_penerimaanbarangdetail_all`.`namabarang` AS `namabarang`,`v_penerimaanbarangdetail_all`.`satuan` AS `satuan`,`v_penerimaanbarangdetail_all`.`qtyterima` AS `jumlahterima`,0 AS `jumlahkeluar`,'1' AS `jenis` from `v_penerimaanbarangdetail_all` union select `v_pengeluaranbarangdetail`.`nokeluar` AS `nokeluar`,`v_pengeluaranbarangdetail`.`tglkeluar` AS `tglkeluar`,`v_pengeluaranbarangdetail`.`tahunanggaran` AS `tahunanggaran`,`v_pengeluaranbarangdetail`.`kdruangan` AS `kdruangan`,`v_pengeluaranbarangdetail`.`keybarang` AS `keybarang`,`v_pengeluaranbarangdetail`.`kdbarang` AS `kdbarang`,`v_pengeluaranbarangdetail`.`namabarang` AS `namabarang`,`v_pengeluaranbarangdetail`.`satuan` AS `satuan`,0 AS `jumlahterima`,`v_pengeluaranbarangdetail`.`qtykeluar` AS `jumlahkeluar`,'2' AS `jenis` from `v_pengeluaranbarangdetail`) `z` order by `z`.`kdruangan`,`z`.`tahunanggaran`,`z`.`keybarang`,`z`.`tgltransaksi`,`z`.`jenis` */;
 
 /*View structure for view v_kegiatan */
 

@@ -251,6 +251,24 @@ if (!defined('BASEPATH'))
 
 	}
 
+	function tgldmy($tanggal)
+	{
+		if (!empty($tanggal)) {
+			return date('d-m-Y', strtotime($tanggal));			
+		}else{
+			return '';
+		}
+	}
+
+	function tglymd($tanggal)
+	{
+		if (!empty($tanggal)) {
+			return date('Y-m-d', strtotime($tanggal));			
+		}else{
+			return '';
+		}
+	}
+
 	function numberformat_indonesia($tenama)
 	{
 		$cReturn = number_format($tenama, 0, ',', '.'); 

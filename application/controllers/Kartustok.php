@@ -26,54 +26,27 @@ class Kartustok extends CI_Controller {
 		$this->load->library('Pdf');
 
 		$jenislaporan 	= $this->uri->segment(3);
-		$tglawal 	= $this->uri->segment(4);
-		$tglakhir 	= $this->uri->segment(5);
+		$tglawal 	= date('Y-m-d', strtotime($this->uri->segment(4)));
+		$tglakhir 	= date('Y-m-d', strtotime($this->uri->segment(5)));
 		
 		$kdruangan 		= $this->uri->segment(6);
 		$kdkelompok 	= $this->uri->segment(7);
 		$keybarang 		= $this->uri->segment(8);
-		$namaruangan	= "";
-		
+		$namaruangan	= $this->App->getRuangan($kdruangan)->namaruangan;
+		$rowBarang = $this->App->getBarangById($keybarang);
 
+		$where 			= "where tahunanggaran='".$this->session->userdata('tahunanggaran')."' and tgltransaksi between '".$tglawal."' and '".$tglakhir."' and keybarang is not null and kdruangan ='".$kdruangan."' and keybarang ='".$keybarang."' ";
 
-		$kdupt = '';
-		$where 			= "where tahunanggaran='".$this->session->userdata('tahunanggaran')."' and keybarang is not null";
-		if ($kdruangan!='-') {
-			$where .=" and kdruangan ='".$kdruangan."' ";
-			$namaruangan .= $this->db->get_where('ruangan', array('kdruangan' => $kdruangan))->row()->namaruangan;
-			$kdupt = '';
-		}else{
-			if ($this->session->userdata('akseslevel')=='2') {
-				
-				$kdupt = $this->session->userdata('kdupt');
-				$where .=" and kdupt ='".$kdupt."' ";			
-				$namaruangan .= $this->db->get_where('upt', array('kdupt' => $kdupt))->row()->namaupt;
-			}else{
-				$where .= '';
-				$namaruangan = '';
-			}
-		}
-
-		if ($kdkelompok!='-') {
-			$where .=" and kdkelompok ='".$kdkelompok."' ";
-			if (!empty($subjudul)) { $subjudul .= " | "; }
-			$subjudul .= "Kelompok Barang : ". $this->db->get_where('kelompokbarang', array('kdkelompok' => $kdkelompok))->row()->namakelompok;
-		}
-
-		if ($keybarang!='-') {
-			$where .=" and keybarang ='".$keybarang."' ";
-			if (!empty($subjudul)) { $subjudul .= " | "; }
-			$subjudul .= "Nama Barang : ". $this->db->get_where('barang', array('keybarang' => $keybarang))->row()->namabarang;
-		}
-		
-
-		$data['rslaporan'] = $this->Laporan_model->get_daftarmutasipersediaan_fifo($where, $kdruangan, $kdupt);
+		// var_dump($where);
+		// exit();
+		$data['rsStok'] = $this->Kartustok_model->getKartuStok($where);
 		$data['subjudul'] = $subjudul;
 		$data['tglawal'] = $tglawal;
 		$data['tglakhir'] = $tglakhir;
 		$data['namaruangan'] = strtoupper($namaruangan);
 		$data['kdruangan'] = $kdruangan;
-		$data['kdupt'] = $kdupt;
+		$data['keybarang'] = $keybarang;
+		$data['rowBarang'] = $rowBarang;
 		$data['tahunanggaran'] = $this->session->userdata('tahunanggaran');
 
 		if ($jenislaporan=='pdf') {
