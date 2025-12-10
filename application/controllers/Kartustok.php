@@ -6,8 +6,20 @@ class Kartustok extends CI_Controller {
     public function __construct()
     {
         parent::__construct();
+		$this->is_login();
         $this->load->model('Kartustok_model');
     }
+
+	public function is_login()
+    {
+        $idpengguna = $this->session->userdata('idpengguna');
+        if (empty($idpengguna)) {
+            $pesan = '<div class="alert alert-danger">Session telah berakhir. Silahkan login kembali . . . </div>';
+            $this->session->set_flashdata('pesan', $pesan);
+            redirect('Login'); 
+            exit();
+        }
+    }	
 
     public function index()
     {
