@@ -31,35 +31,70 @@
           <div class="col-md-12">
 
             <?php  
-              if ($rowpengaturan->aktifbataspenginputan) {
-                if ( date('Y-m-d H:i', strtotime($rowpengaturan->tglbataspenginputan)) <= date('Y-m-d H:i') ) {
+              if ($rsPerruangan->num_rows()>0) {
+                  $rowPerruangan = $rsPerruangan->row();
+                  if ( date('Y-m-d H:i', strtotime($rowPerruangan->tglruangan)) <= date('Y-m-d H:i') ) {
+                    
+                    $sisawaktu = berapawaktuyanglalu($rowPerruangan->tglruangan);
+                    echo '
+  
+                      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Batas waktu penginputan transaksi telah berakhir '.$sisawaktu.'!</strong><br>Anda tidak dapat melakukan input data transaksi lagi, karena batas waktu penginputan data telah berakhir! Terimakasih.
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+  
+                    ';
+  
+                  }else{
+  
+                    $sisawaktu = sisawaktu($rowPerruangan->tglruangan);
+                    echo '
+  
+                      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>Batas waktu penginputan akan berakhir dalam '.$sisawaktu.' Lagi !</strong><br>Silahkan lakukan penginputan data sebelum batas waktu penginputan berakhir! Terimakasih.
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+  
+                    ';
+  
+                  }
                   
-                  $sisawaktu = berapawaktuyanglalu($rowpengaturan->tglbataspenginputan);
-                  echo '
+              }else{
 
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                      <strong>Batas waktu penginputan transaksi telah berakhir '.$sisawaktu.'!</strong><br>Anda tidak dapat melakukan input data transaksi lagi, karena batas waktu penginputan data telah berakhir! Terimakasih.
-                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-
-                  ';
-
-                }else{
-
-                  $sisawaktu = sisawaktu($rowpengaturan->tglbataspenginputan);
-                  echo '
-
-                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                      <strong>Batas waktu penginputan akan berakhir dalam '.$sisawaktu.' Lagi !</strong><br>Silahkan lakukan penginputan data sebelum batas waktu penginputan berakhir! Terimakasih.
-                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-
-                  ';
-
+                if ($rowpengaturan->aktifbataspenginputan) {
+                  if ( date('Y-m-d H:i', strtotime($rowpengaturan->tglbataspenginputan)) <= date('Y-m-d H:i') ) {
+                    
+                    $sisawaktu = berapawaktuyanglalu($rowpengaturan->tglbataspenginputan);
+                    echo '
+  
+                      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Batas waktu penginputan transaksi telah berakhir '.$sisawaktu.'!</strong><br>Anda tidak dapat melakukan input data transaksi lagi, karena batas waktu penginputan data telah berakhir! Terimakasih.
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+  
+                    ';
+  
+                  }else{
+  
+                    $sisawaktu = sisawaktu($rowpengaturan->tglbataspenginputan);
+                    echo '
+  
+                      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>Batas waktu penginputan akan berakhir dalam '.$sisawaktu.' Lagi !</strong><br>Silahkan lakukan penginputan data sebelum batas waktu penginputan berakhir! Terimakasih.
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+  
+                    ';
+  
+                  }
                 }
               }
             ?>

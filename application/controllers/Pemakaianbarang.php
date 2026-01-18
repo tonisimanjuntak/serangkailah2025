@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Pemakaianbarang extends CI_Controller {
+class Pemakaianbarang extends MY_Controller {
 
 	public function __construct()
 	{
@@ -22,17 +22,6 @@ class Pemakaianbarang extends CI_Controller {
         }
     }	
 
-    public function cekbataswaktupenginputan()
-    {
-    	$rowpengaturan = $this->db->query("select * from pengaturan")->row();
-    	if ($rowpengaturan->aktifbataspenginputan) {
-            if ( date('Y-m-d H:i', strtotime($rowpengaturan->tglbataspenginputan)) <= date('Y-m-d H:i') ) {
-    			redirect(site_url());
-    			exit();
-    		}
-    	}
-
-    }
 
 	public function index()
 	{

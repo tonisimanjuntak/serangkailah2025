@@ -23,12 +23,13 @@ class App extends CI_Model {
         return true;
     }
 
-    public function getRuangan($kdruangan)
+    public function getRuangan($kdruangan = "")
     {
         if (!empty($kdruangan)) {
             $this->db->where('kdruangan', $kdruangan);
             return $this->db->get('ruangan')->row();
         }else{
+            $this->db->order_by('namaruangan', 'asc');  
             return $this->db->get('ruangan');
         }
     }

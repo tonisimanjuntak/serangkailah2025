@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Home extends CI_Controller {
+class Home extends MY_Controller {
 
 	public function __construct()
 	{
@@ -23,6 +23,10 @@ class Home extends CI_Controller {
     
 	public function index()
 	{
+		$rsPerruangan = $this->db->query("
+            select * from bataswaktuperruangan where kdruangan='".$this->session->userdata('kdruangan')."'
+        ");
+		$data['rsPerruangan'] = $rsPerruangan;
 		$data['rowpengaturan'] = $this->db->query("select * from pengaturan")->row();
 		$data['jumlahupt'] = $this->db->query("select count(*) as jumlahupt from upt")->row()->jumlahupt;
 		$data['jumlahsekolah'] = $this->db->query("select count(*) as jumlahsekolah from ruangan where statusaktif='1'")->row()->jumlahsekolah;

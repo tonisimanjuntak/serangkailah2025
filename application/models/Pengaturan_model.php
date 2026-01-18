@@ -72,6 +72,57 @@ class Pengaturan_model extends CI_Model
         return $this->db->update('pengguna', $data);
     }
 
+    public function simpanbataswaktuperruangan($data)
+    {
+        try {
+            $this->db->trans_begin();
+            
+            
+
+            $this->db->insert('bataswaktuperruangan', $data);
+            $this->App->riwayatAktifitas($data, 'bataswaktuperruangan', 'simpanbataswaktusekolah');
+
+        
+            if ($this->db->trans_status() === FALSE) {
+                $this->db->trans_rollback();
+                return false;
+            } else {
+                $this->db->trans_commit();
+                return true;
+            }
+        } catch (\Throwable $th) {
+            $this->db->trans_rollback();
+            return false;
+        }
+    }
+
+    public function hapusbataswaktuperruangan($kdruangan)
+    {
+        try {
+            $this->db->trans_begin();
+            
+            $data = $this->db->query("select * from v_bataswaktuperruangan where kdruangan='" . $kdruangan . "'")->row();
+
+            $this->db->where('kdruangan', $kdruangan);
+            $this->db->delete('bataswaktuperruangan');
+
+            $this->App->riwayatAktifitas($data, 'bataswaktuperruangan', 'hapusbataswaktusekolah');
+
+
+            if ($this->db->trans_status() === FALSE) {
+                $this->db->trans_rollback();
+                return false;
+            } else {
+                $this->db->trans_commit();
+                return true;
+            }
+        } catch (\Throwable $th) {
+            $this->db->trans_rollback();
+            return false;
+        }
+        
+    }
+
 }
 
 /* End of file Pengaturan_model.php */

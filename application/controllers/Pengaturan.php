@@ -40,8 +40,9 @@ class Pengaturan extends CI_Controller
     public function bataspenginputan()
     {
         $this->cek_akses();
-
+        $data['rsRuangan'] = $this->App->getRuangan();
         $data['rowpengaturan'] = $this->db->query("select * from pengaturan")->row();
+        $data['rsPerruangan'] = $this->db->query("select * from v_bataswaktuperruangan order by namaruangan");
         $data['menu']          = 'bataspenginputan';
         $this->load->view('pengaturan/bataspenginputan', $data);
     }
@@ -89,6 +90,85 @@ class Pengaturan extends CI_Controller
                         </div>
                     </div>';
         }
+
+        $this->session->set_flashdata('pesan', $pesan);
+        redirect('pengaturan/bataspenginputan');
+    }
+
+    public function simpanbataswaktuperruangan()
+    {
+        $kdruangan = $this->input->post('kdruangan');
+
+        $tglruangan   = date('Y-m-d', strtotime($this->input->post('tglruangan'))) . ' ' . date('H:i', strtotime($this->input->post('timeruangan')));
+
+        $rowBatas = $this->db->query("select * from bataswaktuperruangan where kdruangan = '$kdruangan'");
+
+        if ($rowBatas->num_rows() > 0) {
+            $pesan = '<div>
+                        <div class="alert alert-danger alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+                            <strong> Maaf!</strong> Batas waktu sekolah sudah ada!
+                        </div>
+                    </div>';
+            $this->session->set_flashdata('pesan', $pesan);
+            redirect('pengaturan/bataspenginputan');
+            exit();
+        }
+
+
+        $data = array(
+            'kdruangan' => $kdruangan,
+            'tglruangan' => $tglruangan,
+            'tglinsert' => date('Y-m-d H:i:s'),
+            'idpengguna' => $this->session->userdata('idpengguna'),
+        );
+
+        $simpan = $this->Pengaturan_model->simpanbataswaktuperruangan($data);
+
+        if ($simpan) {
+            $pesan = '<div>
+                        <div class="alert alert-success alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+                            <strong>Berhasil!</strong> Data Perruangan berhasil disimpan!
+                        </div>
+                    </div>';
+        } else {
+            $eror  = $this->db->error();
+            $pesan = '<div>
+                        <div class="alert alert-danger alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+                            <strong>Gagal!</strong> Data gagal disimpan! <br>
+                            Pesan Error : ' . $eror['code'] . ' ' . $eror['message'] . '
+                        </div>
+                    </div>';
+        }
+
+        $this->session->set_flashdata('pesan', $pesan);
+        redirect('pengaturan/bataspenginputan');
+    }
+
+    public function hapusbataswaktuperruangan($kdruangan)
+    {
+        $kdruangan = $this->encrypt->decode($kdruangan);
+
+        $hapus = $this->Pengaturan_model->hapusbataswaktuperruangan($kdruangan);
+		if ($hapus) {
+			$pesan = '<div>
+                        <div class="alert alert-success alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+                            <strong>Berhasil!</strong> Data berhasil dihapus!
+                        </div>
+                    </div>';
+            
+		}else{
+            $pesan = '<div>
+                        <div class="alert alert-danger alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+                            <strong>Gagal!</strong> Data gagal dihapus! <br>
+                            Pesan Error : ' . $eror['code'] . ' ' . $eror['message'] . '
+                        </div>
+                    </div>';
+		}
 
         $this->session->set_flashdata('pesan', $pesan);
         redirect('pengaturan/bataspenginputan');
